@@ -2,7 +2,7 @@
 /*
 Plugin Name: Share a Draft
 Plugin URI: http://wordpress.org/extends/plugins/shareadraft/
-Description: Lets you share a draft with other people
+Description: Let your friends preview one of your drafts, without giving them permissions to edit posts in your blog
 Author: Nikolay Bachiyski
 Version: 0.1
 Author URI: http://nb.niichavo.org/
@@ -115,17 +115,17 @@ if (!class_exists('ShareADraft')) {
 			$others_drafts = get_others_drafts($current_user->id);
 			$drafts_struct = array(
 				array(
-					__('Your Drafts:'),
+					__('Your Drafts:', 'shareadraft'),
 					count($my_drafts),
 					&$my_drafts,
 				),
 				array(
-					__('Pending Review:'),
+					__('Pending Review:', 'shareadraft'),
 					count($pending),
 					&$pending,
 				),
 				array(
-					__('Others&#8217; Drafts:'),
+					__('Others&#8217; Drafts:', 'shareadraft'),
 					count($others_drafts),
 					&$others_drafts,
 				),
@@ -157,10 +157,10 @@ if (!class_exists('ShareADraft')) {
 				$res = array($free_s, $free_m, $free_h, $d);
 			}
 			$names = array();
-			if (isset($res[0])) $names[] = sprintf(__ngettext('%d second', '%d seconds', $res[0]), $res[0]);
-			if (isset($res[1])) $names[] = sprintf(__ngettext('%d minute', '%d minutes', $res[1]), $res[1]);
-			if (isset($res[2])) $names[] = sprintf(__ngettext('%d hour', '%d hours', $res[2]), $res[2]);
-			if (isset($res[3])) $names[] = sprintf(__ngettext('%d day', '%d days', $res[3]), $res[3]);
+			if (isset($res[0])) $names[] = sprintf(__ngettext('%d second', '%d seconds', $res[0], 'shareadraft'), $res[0]);
+			if (isset($res[1])) $names[] = sprintf(__ngettext('%d minute', '%d minutes', $res[1], 'shareadraft'), $res[1]);
+			if (isset($res[2])) $names[] = sprintf(__ngettext('%d hour', '%d hours', $res[2], 'shareadraft'), $res[2]);
+			if (isset($res[3])) $names[] = sprintf(__ngettext('%d day', '%d days', $res[3], 'shareadraft'), $res[3]);
 			return implode(', ', array_reverse($names));
 		}
 
@@ -216,7 +216,7 @@ if (!class_exists('ShareADraft')) {
 			<form id="shareadraft-share" action="" method="post">
 				<p>
 						<select id="shareadraft-postid" name="post_id">
-							<option value=""><?php _e('Choose a draft'); ?></option>
+							<option value=""><?php _e('Choose a draft', 'shareadraft'); ?></option>
 							<?php
 								$drafts_struct = $this->get_drafts();
 								print_r($drafts_struct);
