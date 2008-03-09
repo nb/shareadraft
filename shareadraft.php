@@ -18,55 +18,53 @@ if (!class_exists('ShareADraft')) {
 		}
 
 		function init() {
+			global $current_user;
 			add_action("admin_menu", array(&$this,"add_admin_pages"));
 			add_filter('the_posts', array(&$this, 'the_posts_intercept'));
 			add_filter('posts_results', array(&$this, 'posts_results_intercept'));
 
 			$this->adminOptions = $this->getAdminOptions();
 			$this->adminOptions = $this->clearExpired($this->adminOptions);
-			$this->saveAdminOptions();	
+			$this->userOptions = ($current_user->id > 0 && isset($this->adminOptions[$current_user->id]))? $this->adminOptions[$current_user->id] : array();
 
+			$this->saveAdminOptions();
 			load_plugin_textdomain('shareadraft');
         }
 	
 		function getAdminOptions() {
-			global $current_user;
 			$savedOptions = get_option($this->adminOptionsName);
-			if (!$savedOptions || !isset($savedOptions[$current_user->id]) || !is_array($savedOptions[$current_user->id])) {
-				$savedOptions = array();
-			} else {
-				$savedOptions = $savedOptions[$current_user->id];
-			}
-			return $savedOptions;
+			return is_array($savedOptions)? $savedOptions : array();
 		}
 
 		function saveAdminOptions(){
 			global $current_user;
-			$savedOptions = get_option($this->adminOptionsName);
-			if (!is_array($savedOptions)) {
-				$savedOptions = array();
+			if ($current_user->id > 0) {
+				$this->adminOptions[$current_user->id] = $this->userOptions;
 			}
-			$savedOptions[$current_user->id] = $this->adminOptions;
-			update_option($this->adminOptionsName, $savedOptions);
+			update_option($this->adminOptionsName, $this->adminOptions);
 		}
 
-		function clearExpired($options) {
-			$shared = array();
-			if (!isset($options['shared']) || !is_array($options['shared'])) {
-				return;
-			}
-			foreach($options['shared'] as $share) {
-				if ($share['expires'] < time()) {
+		function clearExpired($all_options) {
+			$all = array();
+			foreach($all_options as $user_id => $options) {
+				$shared = array();
+				if (!isset($options['shared']) || !is_array($options['shared'])) {
 					continue;
 				}
-				$shared[] = $share;
+				foreach($options['shared'] as $share) {
+					if ($share['expires'] < time()) {
+						continue;
+					}
+					$shared[] = $share;
+				}
+				$options['shared'] = $shared;
+				$all[$user_id] = $options;
 			}
-			$options['shared'] = $shared;
-			return $options;
+			return $all;
 		}
 
 		function add_admin_pages(){
-			add_submenu_page("edit.php", "Share a Draft", "Share a Draft", 'edit_posts', __FILE__, array(&$this,"output_existing_menu_sub_admin_page"));
+			add_submenu_page("edit.php", __('Share a Draft', 'shareadraft'), __('Share a Draft', 'shareadraft'), 'edit_posts', __FILE__, array(&$this,"output_existing_menu_sub_admin_page"));
 		}
 
 		function process_post_options($params) {
@@ -74,10 +72,10 @@ if (!class_exists('ShareADraft')) {
 			if (isset($params['post_id'])) {
 				$p = get_post($params['post_id']);
 				if (!$p) {
-					return 'There is no such post!';
+					return __('There is no such post!', 'shareadraft');
 				}
-				if ('draft' != get_post_status($p)) {
-					return 'The post is not a draft!';
+				if ('publish' == get_post_status($p)) {
+					return __('The post is published!', 'shareadraft');
 				}
 				$exp = 60;
 				$multiply = 60;
@@ -88,23 +86,23 @@ if (!class_exists('ShareADraft')) {
 				if (isset($params['measure']) && isset($mults[$params['measure']])) {
 					$multiply = $mults[$params['measure']];
 				}
-				$this->adminOptions['shared'][] = array('id' => $p->ID, 'expires' => time() + $exp*$multiply, 'key' => uniqid('baba'.$p->ID.'_'));
+				$this->userOptions['shared'][] = array('id' => $p->ID, 'expires' => time() + $exp*$multiply, 'key' => uniqid('baba'.$p->ID.'_'));
 				$this->saveAdminOptions();
 			}	
 		}
 
 		function process_delete($params) {
-			if (!isset($params['key']) || !isset($this->adminOptions['shared']) || !is_array($this->adminOptions['shared'])) {
+			if (!isset($params['key']) || !isset($this->userOptions['shared']) || !is_array($this->userOptions['shared'])) {
 				return '';
 			}
 			$shared = array();
-			foreach($this->adminOptions['shared'] as $share) {
+			foreach($this->userOptions['shared'] as $share) {
 				if ($share['key'] == $params['key']) {
 					continue;
 				}
 				$shared[] = $share;
 			}
-			$this->adminOptions['shared'] = $shared;
+			$this->userOptions['shared'] = $shared;
 			$this->saveAdminOptions();
 		}
 
@@ -134,10 +132,10 @@ if (!class_exists('ShareADraft')) {
 		}
 
 		function get_shared() {
-			if (!isset($this->adminOptions['shared']) || !is_array($this->adminOptions['shared'])) {
+			if (!isset($this->userOptions['shared']) || !is_array($this->userOptions['shared'])) {
 				return array();
 			}
-			return $this->adminOptions['shared'];
+			return $this->userOptions['shared'];
 		}
 
 		function friendly_delta($s) {
@@ -176,15 +174,15 @@ if (!class_exists('ShareADraft')) {
 			<?php if ($msg):?>
 			<div id="message" class="updated fade"><?php echo $msg; ?></div>
 			<?php endif;?>
-			<h3>Currently shared drafts</h3>
+			<h3><?php _e('Currently shared drafts', 'shareadraft'); ?></h3>
 			<table class="widefat">
 				<thead>
 					<tr>
-						<th>ID</th>
-						<th>Title</th>
-						<th>Link</th>
-						<th>Expires after</th>
-						<th>Actions</th>
+						<th><?php _e('ID', 'shareadraft'); ?></th>
+						<th><?php _e('Title', 'shareadraft'); ?></th>
+						<th><?php _e('Link', 'shareadraft'); ?></th>
+						<th><?php _e('Expires after'); ?></th>
+						<th><?php _e('Actions', 'shareadraft'); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -205,7 +203,7 @@ if (!class_exists('ShareADraft')) {
 				if (empty($s)):
 			?>
 				<tr>
-					<td colspan="5">No shared drafts!</td>
+				<td colspan="5"><?php _e('No shared drafts!', 'shareadraft'); ?></td>
 				</tr>
 			<?php
 				endif;
@@ -219,7 +217,6 @@ if (!class_exists('ShareADraft')) {
 							<option value=""><?php _e('Choose a draft', 'shareadraft'); ?></option>
 							<?php
 								$drafts_struct = $this->get_drafts();
-								print_r($drafts_struct);
 								foreach($drafts_struct as $draft_type):
 									if ($draft_type[1]):
 							?>
@@ -237,7 +234,7 @@ if (!class_exists('ShareADraft')) {
 						</select>
 				</p>
 				<p>
-						<input type="submit" name="shareadraft_submit" value="Share it" />
+				<input type="submit" name="shareadraft_submit" value="<?php echo attribute_escape(__('Share it', 'shareadraft')); ?>" />
 						for
 						<input name="expires" type="text" value="2" size="4"/>
 						<select name="measure">
@@ -253,12 +250,16 @@ if (!class_exists('ShareADraft')) {
 		}
 
 		function can_view($post_id) {
-			if (!isset($_GET['shareadraft']) || !isset($this->adminOptions['shared']) || !is_array($this->adminOptions['shared'])) {
+			if (!isset($_GET['shareadraft']) || !is_array($this->adminOptions)) {
 				return false;
 			}
-			foreach($this->adminOptions['shared'] as $share) {
-				if ($share['id'] == $post_id && $share['key'] == $_GET['shareadraft']) {
-					return true;
+			foreach($this->adminOptions as $option) {
+				if (!is_array($option) || !isset($option['shared'])) continue;
+				$shares = $option['shared'];
+				foreach($shares as $share) {
+					if ($share['id'] == $post_id && $share['key'] == $_GET['shareadraft']) {
+						return true;
+					}
 				}
 			}
 			return false;
@@ -268,7 +269,7 @@ if (!class_exists('ShareADraft')) {
 			if (1 != count($posts)) return $posts;
 			$post = &$posts[0];
 			$status = get_post_status($post);
-			if ('draft' == $status && $this->can_view($post->ID)) {
+			if ('publish' != $status && $this->can_view($post->ID)) {
 				$this->shared_post = & $post;
 			}
 			return $posts;
