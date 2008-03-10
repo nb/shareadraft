@@ -181,7 +181,7 @@ if (!class_exists('ShareADraft')) {
 						<th><?php _e('ID', 'shareadraft'); ?></th>
 						<th><?php _e('Title', 'shareadraft'); ?></th>
 						<th><?php _e('Link', 'shareadraft'); ?></th>
-						<th><?php _e('Expires after'); ?></th>
+						<th><?php _e('Expires after', 'shareadraft'); ?></th>
 						<th><?php _e('Actions', 'shareadraft'); ?></th>
 					</tr>
 				</thead>
