@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Share a Draft 1.0\n"
 "Report-Msgid-Bugs-To: wp-polyglots@lists.automattic.com\n"
-"POT-Creation-Date: 2008-03-10 00:30+0200\n"
+"POT-Creation-Date: 2008-03-11 14:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,50 +17,90 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: shareadraft.php:118
+#: shareadraft.php:67 shareadraft.php:173
+msgid "Share a Draft"
+msgstr ""
+
+#: shareadraft.php:75
+msgid "There is no such post!"
+msgstr ""
+
+#: shareadraft.php:78
+msgid "The post is published!"
+msgstr ""
+
+#: shareadraft.php:116
 msgid "Your Drafts:"
 msgstr ""
 
-#: shareadraft.php:123
+#: shareadraft.php:121
 msgid "Pending Review:"
 msgstr ""
 
-#: shareadraft.php:128
+#: shareadraft.php:126
 msgid "Others&#8217; Drafts:"
 msgstr ""
 
-#: shareadraft.php:160
+#: shareadraft.php:158
 #, php-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: shareadraft.php:161
+#: shareadraft.php:159
 #, php-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: shareadraft.php:162
+#: shareadraft.php:160
 #, php-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: shareadraft.php:163
+#: shareadraft.php:161
 #, php-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: shareadraft.php:175
-msgid "Share a Draft"
+#: shareadraft.php:177
+msgid "Currently shared drafts"
 msgstr ""
 
-#: shareadraft.php:219
+#: shareadraft.php:181
+msgid "ID"
+msgstr ""
+
+#: shareadraft.php:182
+msgid "Title"
+msgstr ""
+
+#: shareadraft.php:183
+msgid "Link"
+msgstr ""
+
+#: shareadraft.php:184
+msgid "Expires after"
+msgstr ""
+
+#: shareadraft.php:185
+msgid "Actions"
+msgstr ""
+
+#: shareadraft.php:206
+msgid "No shared drafts!"
+msgstr ""
+
+#: shareadraft.php:217
 msgid "Choose a draft"
+msgstr ""
+
+#: shareadraft.php:237
+msgid "Share it"
 msgstr ""

@@ -4,7 +4,7 @@ Plugin Name: Share a Draft
 Plugin URI: http://wordpress.org/extends/plugins/shareadraft/
 Description: Let your friends preview one of your drafts, without giving them permissions to edit posts in your blog
 Author: Nikolay Bachiyski
-Version: 0.1
+Version: 0.3
 Author URI: http://nb.niichavo.org/
 Generated At: www.wp-fun.co.uk;
 */ 
