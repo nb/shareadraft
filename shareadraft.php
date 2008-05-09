@@ -28,7 +28,7 @@ if (!class_exists('ShareADraft')) {
 			$this->userOptions = ($current_user->id > 0 && isset($this->adminOptions[$current_user->id]))? $this->adminOptions[$current_user->id] : array();
 
 			$this->saveAdminOptions();
-			load_plugin_textdomain('shareadraft');
+			load_plugin_textdomain('shareadraft', PLUGINDIR . '/shareadraft/languages');
         }
 	
 		function getAdminOptions() {
@@ -236,7 +236,7 @@ if (!class_exists('ShareADraft')) {
 				</p>
 				<p>
 				<input type="submit" name="shareadraft_submit" value="<?php echo attribute_escape(__('Share it', 'shareadraft')); ?>" />
-						<?php __('for', 'shareadraft'); ?>
+						<?php _e('for', 'shareadraft'); ?>
 						<input name="expires" type="text" value="2" size="4"/>
 						<select name="measure">
 						<option value="s"><?php _e('seconds', 'shareadraft'); ?></option>
