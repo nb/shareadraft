@@ -1,14 +1,14 @@
-# shareadraft theme pot file.
-# Copyright (C) 2008 Nikolay Bachiyski
-# This file is distributed under the same license as the shareadraft theme package.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Nikolay Bachiyski
+# This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Share a Draft 1.0\n"
-"Report-Msgid-Bugs-To: wp-polyglots@lists.automattic.com\n"
-"POT-Creation-Date: 2008-03-11 14:15+0200\n"
+"Project-Id-Version: Share a Draft 0.4\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/shareadraft\n"
+"POT-Creation-Date: 2008-05-09 18:09+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,10 +97,34 @@ msgstr ""
 msgid "No shared drafts!"
 msgstr ""
 
+#: shareadraft.php:213
+msgid "Share a draft"
+msgstr ""
+
 #: shareadraft.php:217
 msgid "Choose a draft"
 msgstr ""
 
-#: shareadraft.php:237
+#: shareadraft.php:238
 msgid "Share it"
+msgstr ""
+
+#: shareadraft.php:239
+msgid "for"
+msgstr ""
+
+#: shareadraft.php:242
+msgid "seconds"
+msgstr ""
+
+#: shareadraft.php:243
+msgid "minutes"
+msgstr ""
+
+#: shareadraft.php:244
+msgid "hours"
+msgstr ""
+
+#: shareadraft.php:245
+msgid "days"
 msgstr ""

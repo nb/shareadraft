@@ -4,8 +4,8 @@ Plugin Name: Share a Draft
 Plugin URI: http://wordpress.org/extends/plugins/shareadraft/
 Description: Let your friends preview one of your drafts, without giving them permissions to edit posts in your blog
 Author: Nikolay Bachiyski
-Version: 0.3
-Author URI: http://nb.niichavo.org/
+Version: 0.4
+Author URI: http://nikolay.bg/
 Generated At: www.wp-fun.co.uk;
 */ 
 
@@ -210,7 +210,7 @@ if (!class_exists('ShareADraft')) {
 			?>
 				</tbody>
 			</table>
-			<h3>Share a draft</h3>
+			<h3><?php _e('Share a draft', 'shareadraft'); ?></h3>
 			<form id="shareadraft-share" action="" method="post">
 				<p>
 						<select id="shareadraft-postid" name="post_id">
@@ -224,6 +224,7 @@ if (!class_exists('ShareADraft')) {
 							<option value="" disabled="disabled"><?php echo $draft_type[0]; ?></option>
 							<?php
 										foreach($draft_type[2] as $draft):
+											if (empty($draft->post_title)) continue;
 							?>
 							<option value="<?php echo $draft->ID?>"><?php echo wp_specialchars($draft->post_title); ?></option>
 							<?php
@@ -235,13 +236,13 @@ if (!class_exists('ShareADraft')) {
 				</p>
 				<p>
 				<input type="submit" name="shareadraft_submit" value="<?php echo attribute_escape(__('Share it', 'shareadraft')); ?>" />
-						for
+						<?php __('for', 'shareadraft'); ?>
 						<input name="expires" type="text" value="2" size="4"/>
 						<select name="measure">
-							<option value="s">seconds</option>
-							<option value="m">minutes</option>
-							<option value="h" selected="selected">hours</option>
-							<option value="d">days</option>
+						<option value="s"><?php _e('seconds', 'shareadraft'); ?></option>
+						<option value="m"><?php _e('minutes', 'shareadraft'); ?></option>
+						<option value="h" selected="selected"><?php _e('hours', 'shareadraft'); ?></option>
+						<option value="d"><?php _e('days', 'shareadraft'); ?></option>
 						</select>.
 				</p>
 			</form>
