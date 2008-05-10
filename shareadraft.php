@@ -4,7 +4,7 @@ Plugin Name: Share a Draft
 Plugin URI: http://wordpress.org/extend/plugins/shareadraft/
 Description: Let your friends preview one of your drafts, without giving them permissions to edit posts in your blog
 Author: Nikolay Bachiyski
-Version: 0.7
+Version: 0.8
 Author URI: http://nikolay.bg/
 Generated At: www.wp-fun.co.uk;
 */ 
@@ -227,7 +227,7 @@ if (!class_exists('ShareADraft')):
 						<!-- TODO: make the draft link selecatble -->
 						<td><?php echo get_option('siteurl'); ?>?p=<?php echo $p->ID?>&amp;shareadraft=<?php echo $share['key']; ?></td>
 						<td><?php echo $this->friendly_delta($share['expires'] - time()); ?></td>
-						<td>
+						<td class="actions">
 							<a class="shareadraft-extend" id="shareadraft-extend-link-<?php echo $share['key']; ?>" href="javascript:shareadraft.toggle_extend('<?php echo $share['key']; ?>');"><?php _e('Extend', 'shareadraft'); ?></a>
 							<form class="shareadraft-extend" id="shareadraft-extend-form-<?php echo $share['key']; ?>" action="" method="post">
 								<input type="hidden" name="action" value="extend" />
@@ -339,10 +339,13 @@ SELECT;
 		function print_admin_css() {
 ?>
 		<style type="text/css">
-			a.shareadraft-extend, a.shareadraft-extend-cancel {display: none;}
+			a.shareadraft-extend, a.shareadraft-extend-cancel {
+				display: none;
+				border-bottom: 0;
+			}
 			form.shareadraft-extend {white-space: nowrap;}
 			form.shareadraft-extend, form.shareadraft-extend input, form.shareadraft-extend select { font-size: 11px;}
-			
+			th, td.actions {text-align: center;}			
 		</style>
 <?php
 		}
@@ -354,7 +357,9 @@ SELECT;
 			jQuery(function($) {
 				$('form.shareadraft-extend').hide();
 				$('a.shareadraft-extend').show();
+				$('a.shareadraft-extend').css('display', 'inline');
 				$('a.shareadraft-extend-cancel').show();
+				$('a.shareadraft-extend-cancel').css('display', 'inline');
 			});
 			var shareadraft = {
 				toggle_extend: function(key) {
