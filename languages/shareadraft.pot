@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Share a Draft 0.4\n"
+"Project-Id-Version: Share a Draft 0.6-alpha\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/shareadraft\n"
-"POT-Creation-Date: 2008-05-10 11:45+0300\n"
+"POT-Creation-Date: 2008-05-10 13:31+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,118 +17,130 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: shareadraft.php:67 shareadraft.php:173
+#: shareadraft.php:76 shareadraft.php:203
 msgid "Share a Draft"
 msgstr ""
 
-#: shareadraft.php:75
+#: shareadraft.php:97
 msgid "There is no such post!"
 msgstr ""
 
-#: shareadraft.php:78
+#: shareadraft.php:100
 msgid "The post is published!"
 msgstr ""
 
-#: shareadraft.php:116
+#: shareadraft.php:144
 msgid "Your Drafts:"
 msgstr ""
 
-#: shareadraft.php:121
+#: shareadraft.php:149
 msgid "Pending Review:"
 msgstr ""
 
-#: shareadraft.php:126
+#: shareadraft.php:154
 msgid "Others&#8217; Drafts:"
 msgstr ""
 
-#: shareadraft.php:158
+#: shareadraft.php:186
 #, php-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: shareadraft.php:159
+#: shareadraft.php:187
 #, php-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: shareadraft.php:160
+#: shareadraft.php:188
 #, php-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: shareadraft.php:161
+#: shareadraft.php:189
 #, php-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: shareadraft.php:177
+#: shareadraft.php:207
 msgid "Currently shared drafts"
 msgstr ""
 
-#: shareadraft.php:181
+#: shareadraft.php:211
 msgid "ID"
 msgstr ""
 
-#: shareadraft.php:182
+#: shareadraft.php:212
 msgid "Title"
 msgstr ""
 
-#: shareadraft.php:183
+#: shareadraft.php:213
 msgid "Link"
 msgstr ""
 
-#: shareadraft.php:184
+#: shareadraft.php:214
 msgid "Expires after"
 msgstr ""
 
-#: shareadraft.php:185
+#: shareadraft.php:215
 msgid "Actions"
 msgstr ""
 
-#: shareadraft.php:200
-msgid "Delete"
+#: shareadraft.php:231 shareadraft.php:235
+msgid "Extend"
 msgstr ""
 
-#: shareadraft.php:206
-msgid "No shared drafts!"
-msgstr ""
-
-#: shareadraft.php:213
-msgid "Share a draft"
-msgstr ""
-
-#: shareadraft.php:217
-msgid "Choose a draft"
+#: shareadraft.php:236
+msgid "by"
 msgstr ""
 
 #: shareadraft.php:238
+msgid "Cancel"
+msgstr ""
+
+#: shareadraft.php:240
+msgid "Delete"
+msgstr ""
+
+#: shareadraft.php:247
+msgid "No shared drafts!"
+msgstr ""
+
+#: shareadraft.php:254
+msgid "Share a draft"
+msgstr ""
+
+#: shareadraft.php:258
+msgid "Choose a draft"
+msgstr ""
+
+#: shareadraft.php:279
 msgid "Share it"
 msgstr ""
 
-#: shareadraft.php:239
+#: shareadraft.php:280
 msgid "for"
 msgstr ""
 
-#: shareadraft.php:242
+#: shareadraft.php:324
 msgid "seconds"
 msgstr ""
 
-#: shareadraft.php:243
+#: shareadraft.php:325
 msgid "minutes"
 msgstr ""
 
-#: shareadraft.php:244
+#: shareadraft.php:326
 msgid "hours"
 msgstr ""
 
-#: shareadraft.php:245
+#: shareadraft.php:327
 msgid "days"
 msgstr ""

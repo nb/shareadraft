@@ -9,7 +9,7 @@ Author URI: http://nikolay.bg/
 Generated At: www.wp-fun.co.uk;
 */ 
 
-if (!class_exists('ShareADraft')) {
+if (!class_exists('ShareADraft')):
     class ShareADraft	{
 		var $adminOptionsName = "ShareADraft_options";
 
@@ -29,8 +29,17 @@ if (!class_exists('ShareADraft')) {
 
 			$this->saveAdminOptions();
 			load_plugin_textdomain('shareadraft', PLUGINDIR . '/shareadraft/languages');
-        }
-	
+			
+			if (isset($_GET['page']) && $_GET['page'] == plugin_basename(__FILE__))
+				$this->admin_page_init();
+		}
+
+		function admin_page_init() {
+			wp_enqueue_script('jquery');
+			add_action('admin_head', array(&$this, 'print_admin_css'));
+			add_action('admin_head', array(&$this, 'print_admin_js'));
+		}
+
 		function getAdminOptions() {
 			$savedOptions = get_option($this->adminOptionsName);
 			return is_array($savedOptions)? $savedOptions : array();
@@ -67,6 +76,19 @@ if (!class_exists('ShareADraft')) {
 			add_submenu_page("edit.php", __('Share a Draft', 'shareadraft'), __('Share a Draft', 'shareadraft'), 'edit_posts', __FILE__, array(&$this,"output_existing_menu_sub_admin_page"));
 		}
 
+		function calculate_seconds($params) {
+			$exp = 60;
+			$multiply = 60;
+			if (isset($params['expires']) && ($e = intval($params['expires']))) {
+				$exp = $e;
+			}
+			$mults = array('s' => 1, 'm' => 60, 'h' => 3600, 'd' => 24*3600);
+			if (isset($params['measure']) && isset($mults[$params['measure']])) {
+				$multiply = $mults[$params['measure']];
+			}
+			return $exp * $multiply;
+		}
+
 		function process_post_options($params) {
 			global $current_user;
 			if (isset($params['post_id'])) {
@@ -77,16 +99,7 @@ if (!class_exists('ShareADraft')) {
 				if ('publish' == get_post_status($p)) {
 					return __('The post is published!', 'shareadraft');
 				}
-				$exp = 60;
-				$multiply = 60;
-				if (isset($params['expires']) && ($e = intval($params['expires']))) {
-					$exp = $e;
-				}
-				$mults = array('s' => 1, 'm' => 60, 'h' => 3600, 'd' => 24*3600);
-				if (isset($params['measure']) && isset($mults[$params['measure']])) {
-					$multiply = $mults[$params['measure']];
-				}
-				$this->userOptions['shared'][] = array('id' => $p->ID, 'expires' => time() + $exp*$multiply, 'key' => uniqid('baba'.$p->ID.'_'));
+				$this->userOptions['shared'][] = array('id' => $p->ID, 'expires' => time() + $this->calculate_seconds($params), 'key' => uniqid('baba'.$p->ID.'_'));
 				$this->saveAdminOptions();
 			}	
 		}
@@ -99,6 +112,21 @@ if (!class_exists('ShareADraft')) {
 			foreach($this->userOptions['shared'] as $share) {
 				if ($share['key'] == $params['key']) {
 					continue;
+				}
+				$shared[] = $share;
+			}
+			$this->userOptions['shared'] = $shared;
+			$this->saveAdminOptions();
+		}
+
+		function process_extend($params) {
+			if (!isset($params['key']) || !isset($this->userOptions['shared']) || !is_array($this->userOptions['shared'])) {
+				return '';
+			}
+			$shared = array();
+			foreach($this->userOptions['shared'] as $share) {
+				if ($share['key'] == $params['key']) {
+					$share['expires'] += $this->calculate_seconds($params);
 				}
 				$shared[] = $share;
 			}
@@ -165,9 +193,11 @@ if (!class_exists('ShareADraft')) {
 		function output_existing_menu_sub_admin_page(){
 			if (isset($_POST['shareadraft_submit'])) {
 				$msg = $this->process_post_options($_POST);
+			} elseif (isset($_POST['action']) && $_POST['action'] == 'extend') {
+				$msg = $this->process_extend($_POST);
 			} elseif (isset($_GET['action']) && $_GET['action'] == 'delete') {
 				$msg = $this->process_delete($_GET);
-			}
+			} 
 		?>
 			<div class="wrap">
 			<h2><?php _e('Share a Draft', 'shareadraft'); ?></h2>
@@ -182,7 +212,7 @@ if (!class_exists('ShareADraft')) {
 						<th><?php _e('Title', 'shareadraft'); ?></th>
 						<th><?php _e('Link', 'shareadraft'); ?></th>
 						<th><?php _e('Expires after', 'shareadraft'); ?></th>
-						<th><?php _e('Actions', 'shareadraft'); ?></th>
+						<th class="actions"><?php _e('Actions', 'shareadraft'); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -197,7 +227,18 @@ if (!class_exists('ShareADraft')) {
 						<!-- TODO: make the draft link selecatble -->
 						<td><?php echo get_option('siteurl'); ?>?p=<?php echo $p->ID?>&amp;shareadraft=<?php echo $share['key']; ?></td>
 						<td><?php echo $this->friendly_delta($share['expires'] - time()); ?></td>
-						<td><a class="delete" href="edit.php?page=<?php echo plugin_basename(__FILE__); ?>&amp;action=delete&amp;key=<?php echo $share['key']; ?>"><?php _e('Delete', 'shareadraft'); ?></a></td>
+						<td>
+							<a class="shareadraft-extend" id="shareadraft-extend-link-<?php echo $share['key']; ?>" href="javascript:shareadraft.toggle_extend('<?php echo $share['key']; ?>');"><?php _e('Extend', 'shareadraft'); ?></a>
+							<form class="shareadraft-extend" id="shareadraft-extend-form-<?php echo $share['key']; ?>" action="" method="post">
+								<input type="hidden" name="action" value="extend" />
+								<input type="hidden" name="key" value="<?php echo $share['key']; ?>" />
+								<input type="submit" name="shareadraft_extend_submit" value="<?php echo attribute_escape(__('Extend', 'shareadraft')); ?>"/>
+								<?php _e('by', 'shareadraft');?>
+								<?php echo $this->tmpl_measure_select(); ?>
+								<a class="shareadraft-extend-cancel" href="javascript:shareadraft.cancel_extend('<?php echo $share['key']; ?>');"><?php _e('Cancel', 'shareadraft'); ?></a>
+							</form>
+							<a class="delete" href="edit.php?page=<?php echo plugin_basename(__FILE__); ?>&amp;action=delete&amp;key=<?php echo $share['key']; ?>"><?php _e('Delete', 'shareadraft'); ?></a>
+						</td>
 			<?php
 				endforeach;
 				if (empty($s)):
@@ -237,13 +278,7 @@ if (!class_exists('ShareADraft')) {
 				<p>
 				<input type="submit" name="shareadraft_submit" value="<?php echo attribute_escape(__('Share it', 'shareadraft')); ?>" />
 						<?php _e('for', 'shareadraft'); ?>
-						<input name="expires" type="text" value="2" size="4"/>
-						<select name="measure">
-						<option value="s"><?php _e('seconds', 'shareadraft'); ?></option>
-						<option value="m"><?php _e('minutes', 'shareadraft'); ?></option>
-						<option value="h" selected="selected"><?php _e('hours', 'shareadraft'); ?></option>
-						<option value="d"><?php _e('days', 'shareadraft'); ?></option>
-						</select>.
+						<?php echo $this->tmpl_measure_select(); ?>.
 				</p>
 			</form>
 			</div>
@@ -284,8 +319,59 @@ if (!class_exists('ShareADraft')) {
 				return $posts;
 			}
 		}
+
+		function tmpl_measure_select() {
+			$secs = __('seconds', 'shareadraft');
+			$mins = __('minutes', 'shareadraft');
+			$hours = __('hours', 'shareadraft');
+			$days = __('days', 'shareadraft');
+			return <<<SELECT
+					<input name="expires" type="text" value="2" size="4"/>
+					<select name="measure">
+						<option value="s">$secs</option>
+						<option value="m">$mins</option>
+						<option value="h" selected="selected">$hours</option>
+						<option value="d">$days</option>
+					</select>
+SELECT;
+		}
+
+		function print_admin_css() {
+?>
+		<style type="text/css">
+			a.shareadraft-extend, a.shareadraft-extend-cancel {display: none;}
+			form.shareadraft-extend {white-space: nowrap;}
+			form.shareadraft-extend, form.shareadraft-extend input, form.shareadraft-extend select { font-size: 11px;}
+			
+		</style>
+<?php
+		}
+
+		function print_admin_js() {
+?>
+		<script type="text/javascript">
+		//<![CDATA[
+			jQuery(function($) {
+				$('form.shareadraft-extend').hide();
+				$('a.shareadraft-extend').show();
+				$('a.shareadraft-extend-cancel').show();
+			});
+			var shareadraft = {
+				toggle_extend: function(key) {
+					jQuery('#shareadraft-extend-form-'+key).show();
+					jQuery('#shareadraft-extend-link-'+key).hide();
+				},
+				cancel_extend: function(key) {
+					jQuery('#shareadraft-extend-form-'+key).hide();
+					jQuery('#shareadraft-extend-link-'+key).show();
+				}
+			};
+		//]]>
+		</script>
+<?php
+		}
     }
-}
+endif;
 
 if (class_exists('ShareADraft')) {
 	$ShareADraft = new ShareADraft();
