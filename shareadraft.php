@@ -212,7 +212,7 @@ if (!class_exists('ShareADraft')):
 						<th><?php _e('Title', 'shareadraft'); ?></th>
 						<th><?php _e('Link', 'shareadraft'); ?></th>
 						<th><?php _e('Expires after', 'shareadraft'); ?></th>
-						<th class="actions"><?php _e('Actions', 'shareadraft'); ?></th>
+						<th colspan="2" class="actions"><?php _e('Actions', 'shareadraft'); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -228,7 +228,7 @@ if (!class_exists('ShareADraft')):
 						<td><?php echo get_option('siteurl'); ?>?p=<?php echo $p->ID?>&amp;shareadraft=<?php echo $share['key']; ?></td>
 						<td><?php echo $this->friendly_delta($share['expires'] - time()); ?></td>
 						<td class="actions">
-							<a class="shareadraft-extend" id="shareadraft-extend-link-<?php echo $share['key']; ?>" href="javascript:shareadraft.toggle_extend('<?php echo $share['key']; ?>');"><?php _e('Extend', 'shareadraft'); ?></a>
+							<a class="shareadraft-extend edit" id="shareadraft-extend-link-<?php echo $share['key']; ?>" href="javascript:shareadraft.toggle_extend('<?php echo $share['key']; ?>');"><?php _e('Extend', 'shareadraft'); ?></a>
 							<form class="shareadraft-extend" id="shareadraft-extend-form-<?php echo $share['key']; ?>" action="" method="post">
 								<input type="hidden" name="action" value="extend" />
 								<input type="hidden" name="key" value="<?php echo $share['key']; ?>" />
@@ -237,6 +237,8 @@ if (!class_exists('ShareADraft')):
 								<?php echo $this->tmpl_measure_select(); ?>
 								<a class="shareadraft-extend-cancel" href="javascript:shareadraft.cancel_extend('<?php echo $share['key']; ?>');"><?php _e('Cancel', 'shareadraft'); ?></a>
 							</form>
+						</td>
+						<td class="actions">
 							<a class="delete" href="edit.php?page=<?php echo plugin_basename(__FILE__); ?>&amp;action=delete&amp;key=<?php echo $share['key']; ?>"><?php _e('Delete', 'shareadraft'); ?></a>
 						</td>
 			<?php
@@ -339,13 +341,10 @@ SELECT;
 		function print_admin_css() {
 ?>
 		<style type="text/css">
-			a.shareadraft-extend, a.shareadraft-extend-cancel {
-				display: none;
-				border-bottom: 0;
-			}
+			a.shareadraft-extend, a.shareadraft-extend-cancel { display: none; }
 			form.shareadraft-extend {white-space: nowrap;}
 			form.shareadraft-extend, form.shareadraft-extend input, form.shareadraft-extend select { font-size: 11px;}
-			th, td.actions {text-align: center;}			
+			th.actions, td.actions {text-align: center;}			
 		</style>
 <?php
 		}
@@ -357,7 +356,7 @@ SELECT;
 			jQuery(function($) {
 				$('form.shareadraft-extend').hide();
 				$('a.shareadraft-extend').show();
-				$('a.shareadraft-extend').css('display', 'inline');
+				//$('a.shareadraft-extend').css('display', 'inline');
 				$('a.shareadraft-extend-cancel').show();
 				$('a.shareadraft-extend-cancel').css('display', 'inline');
 			});
