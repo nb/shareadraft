@@ -251,7 +251,7 @@ if (!class_exists('ShareADraft')):
 			?>
 				</tbody>
 			</table>
-			<h3><?php _e('Share a draft', 'shareadraft'); ?></h3>
+			<h3><?php _e('Share a Draft', 'shareadraft'); ?></h3>
 			<form id="shareadraft-share" action="" method="post">
 				<p>
 						<select id="shareadraft-postid" name="post_id">
