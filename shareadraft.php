@@ -4,7 +4,7 @@ Plugin Name: Share a Draft
 Plugin URI: http://wordpress.org/extends/plugins/shareadraft/
 Description: Let your friends preview one of your drafts, without giving them permissions to edit posts in your blog
 Author: Nikolay Bachiyski
-Version: 0.5
+Version: 0.6-alpha
 Author URI: http://nikolay.bg/
 Generated At: www.wp-fun.co.uk;
 */ 
@@ -197,7 +197,7 @@ if (!class_exists('ShareADraft')) {
 						<!-- TODO: make the draft link selecatble -->
 						<td><?php echo get_option('siteurl'); ?>?p=<?php echo $p->ID?>&amp;shareadraft=<?php echo $share['key']; ?></td>
 						<td><?php echo $this->friendly_delta($share['expires'] - time()); ?></td>
-						<td><a class="delete" href="edit.php?page=<?php echo plugin_basename(__FILE__); ?>&amp;action=delete&amp;key=<?php echo $share['key']; ?>"><?php _e('Delete'); ?></a></td>
+						<td><a class="delete" href="edit.php?page=<?php echo plugin_basename(__FILE__); ?>&amp;action=delete&amp;key=<?php echo $share['key']; ?>"><?php _e('Delete', 'shareadraft'); ?></a></td>
 			<?php
 				endforeach;
 				if (empty($s)):
