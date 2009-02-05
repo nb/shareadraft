@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Share a Draft 0.6\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/shareadraft\n"
-"POT-Creation-Date: 2008-05-10 13:44+0300\n"
+"POT-Creation-Date: 2009-02-05 10:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,126 +17,145 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: shareadraft.php:76 shareadraft.php:203 shareadraft.php:254
+#. Plugin Name of an extension
+#: shareadraft.php:77 shareadraft.php:204 shareadraft.php:257
 msgid "Share a Draft"
 msgstr ""
 
-#: shareadraft.php:97
+#: shareadraft.php:98
 msgid "There is no such post!"
 msgstr ""
 
-#: shareadraft.php:100
+#: shareadraft.php:101
 msgid "The post is published!"
 msgstr ""
 
-#: shareadraft.php:144
+#: shareadraft.php:145
 msgid "Your Drafts:"
 msgstr ""
 
-#: shareadraft.php:149
+#: shareadraft.php:150
 msgid "Pending Review:"
 msgstr ""
 
-#: shareadraft.php:154
+#: shareadraft.php:155
 msgid "Others&#8217; Drafts:"
 msgstr ""
 
-#: shareadraft.php:186
+#: shareadraft.php:187
 #, php-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: shareadraft.php:187
+#: shareadraft.php:188
 #, php-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: shareadraft.php:188
+#: shareadraft.php:189
 #, php-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: shareadraft.php:189
+#: shareadraft.php:190
 #, php-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: shareadraft.php:207
+#: shareadraft.php:208
 msgid "Currently shared drafts"
 msgstr ""
 
-#: shareadraft.php:211
+#: shareadraft.php:212
 msgid "ID"
 msgstr ""
 
-#: shareadraft.php:212
+#: shareadraft.php:213
 msgid "Title"
 msgstr ""
 
-#: shareadraft.php:213
+#: shareadraft.php:214
 msgid "Link"
 msgstr ""
 
-#: shareadraft.php:214
+#: shareadraft.php:215
 msgid "Expires after"
 msgstr ""
 
-#: shareadraft.php:215
+#: shareadraft.php:216
 msgid "Actions"
 msgstr ""
 
-#: shareadraft.php:231 shareadraft.php:235
+#: shareadraft.php:232 shareadraft.php:236
 msgid "Extend"
 msgstr ""
 
-#: shareadraft.php:236
+#: shareadraft.php:237
 msgid "by"
 msgstr ""
 
-#: shareadraft.php:238
+#: shareadraft.php:239
 msgid "Cancel"
 msgstr ""
 
-#: shareadraft.php:240
+#: shareadraft.php:243
 msgid "Delete"
 msgstr ""
 
-#: shareadraft.php:247
+#: shareadraft.php:250
 msgid "No shared drafts!"
 msgstr ""
 
-#: shareadraft.php:258
+#: shareadraft.php:261
 msgid "Choose a draft"
 msgstr ""
 
-#: shareadraft.php:279
+#: shareadraft.php:282
 msgid "Share it"
 msgstr ""
 
-#: shareadraft.php:280
+#: shareadraft.php:283
 msgid "for"
 msgstr ""
 
-#: shareadraft.php:324
+#: shareadraft.php:327
 msgid "seconds"
 msgstr ""
 
-#: shareadraft.php:325
+#: shareadraft.php:328
 msgid "minutes"
 msgstr ""
 
-#: shareadraft.php:326
+#: shareadraft.php:329
 msgid "hours"
 msgstr ""
 
-#: shareadraft.php:327
+#: shareadraft.php:330
 msgid "days"
+msgstr ""
+
+#. Plugin URI of an extension
+msgid "http://wordpress.org/extend/plugins/shareadraft/"
+msgstr ""
+
+#. Description of an extension
+msgid ""
+"Let your friends preview one of your drafts, without giving them permissions "
+"to edit posts in your blog."
+msgstr ""
+
+#. Author of an extension
+msgid "Nikolay Bachiyski"
+msgstr ""
+
+#. Author URI of an extension
+msgid "http://nikolay.bg/"
 msgstr ""
