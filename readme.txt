@@ -1,8 +1,8 @@
 === Share a Draft ===
 Contributors: nbachiyski
-Tags: post, post, draft, posts, drafts
+Tags: post, post, draft, posts, drafts, share, sharing
 Requires at least: 2.3
-Tested up to: 2.5
+Tested up to: 2.7.1
 Stable tag: 1.1
 
 Let your friends preview one of your drafts, without giving them permissions to edit posts in your blog
@@ -20,7 +20,7 @@ This section describes how to install the plugin and get it working.
 
 e.g.
 
-1. Upload `shareadraft.php` or the whole `shareadraft` folder to the `/wp-content/plugins/` directory
+1. Upload the whole `shareadraft` folder to `/wp-content/plugins/`
 1. Activate the plugin through the `Plugins` menu in WordPress
 1. Go to Manage -> Share a Draft and enjoy!
 

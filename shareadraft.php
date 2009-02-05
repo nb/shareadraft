@@ -2,10 +2,11 @@
 /*
 Plugin Name: Share a Draft
 Plugin URI: http://wordpress.org/extend/plugins/shareadraft/
-Description: Let your friends preview one of your drafts, without giving them permissions to edit posts in your blog
+Description: Let your friends preview one of your drafts, without giving them permissions to edit posts in your blog.
 Author: Nikolay Bachiyski
-Version: 1.1
+Version: 1.2
 Author URI: http://nikolay.bg/
+Text Domain: shareadraft
 Generated At: www.wp-fun.co.uk;
 */ 
 
@@ -232,7 +233,7 @@ if (!class_exists('ShareADraft')):
 							<form class="shareadraft-extend" id="shareadraft-extend-form-<?php echo $share['key']; ?>" action="" method="post">
 								<input type="hidden" name="action" value="extend" />
 								<input type="hidden" name="key" value="<?php echo $share['key']; ?>" />
-								<input type="submit" name="shareadraft_extend_submit" value="<?php echo attribute_escape(__('Extend', 'shareadraft')); ?>"/>
+								<input type="submit" class="button" name="shareadraft_extend_submit" value="<?php echo attribute_escape(__('Extend', 'shareadraft')); ?>"/>
 								<?php _e('by', 'shareadraft');?>
 								<?php echo $this->tmpl_measure_select(); ?>
 								<a class="shareadraft-extend-cancel" href="javascript:shareadraft.cancel_extend('<?php echo $share['key']; ?>');"><?php _e('Cancel', 'shareadraft'); ?></a>
@@ -278,7 +279,7 @@ if (!class_exists('ShareADraft')):
 						</select>
 				</p>
 				<p>
-				<input type="submit" name="shareadraft_submit" value="<?php echo attribute_escape(__('Share it', 'shareadraft')); ?>" />
+				<input type="submit" class="button" name="shareadraft_submit" value="<?php echo attribute_escape(__('Share it', 'shareadraft')); ?>" />
 						<?php _e('for', 'shareadraft'); ?>
 						<?php echo $this->tmpl_measure_select(); ?>.
 				</p>
@@ -363,6 +364,7 @@ SELECT;
 				toggle_extend: function(key) {
 					jQuery('#shareadraft-extend-form-'+key).show();
 					jQuery('#shareadraft-extend-link-'+key).hide();
+					jQuery('#shareadraft-extend-form-'+key+' input[name="expires"]').focus();
 				},
 				cancel_extend: function(key) {
 					jQuery('#shareadraft-extend-form-'+key).hide();
