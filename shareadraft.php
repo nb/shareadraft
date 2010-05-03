@@ -20,12 +20,12 @@ class ShareADraft	{
 
 	function init() {
 		global $current_user;
-		add_action("admin_menu", array(&$this,"add_admin_pages"));
+		add_action('admin_menu', array(&$this, 'add_admin_pages'));
 		add_filter('the_posts', array(&$this, 'the_posts_intercept'));
 		add_filter('posts_results', array(&$this, 'posts_results_intercept'));
 
 		$this->admin_options = $this->get_admin_options();
-		$this->admin_options = $this->clearExpired($this->admin_options);
+		$this->admin_options = $this->clear_expired($this->admin_options);
 		$this->user_options = ($current_user->id > 0 && isset($this->admin_options[$current_user->id]))? $this->admin_options[$current_user->id] : array();
 
 		$this->save_admin_options();
@@ -54,7 +54,7 @@ class ShareADraft	{
 		update_option($this->admin_options_name, $this->admin_options);
 	}
 
-	function clearExpired($all_options) {
+	function clear_expired($all_options) {
 		$all = array();
 		foreach($all_options as $user_id => $options) {
 			$shared = array();
@@ -75,7 +75,7 @@ class ShareADraft	{
 
 	function add_admin_pages(){
 		add_submenu_page("edit.php", __('Share a Draft', 'shareadraft'), __('Share a Draft', 'shareadraft'),
-			'edit_posts', __FILE__, array(&$this,"output_existing_menu_sub_admin_page"));
+			'edit_posts', __FILE__, array(&$this, 'output_existing_menu_sub_admin_page'));
 	}
 
 	function calculate_seconds($params) {
@@ -128,7 +128,7 @@ class ShareADraft	{
 	function process_extend($params) {
 		if (!isset($params['key']) ||
 			!isset($this->user_options['shared']) ||
-		!is_array($this->user_options['shared'])) {
+			!is_array($this->user_options['shared'])) {
 			return '';
 		}
 		$shared = array();
@@ -352,10 +352,10 @@ class ShareADraft	{
 		return <<<SELECT
 			<input name="expires" type="text" value="2" size="4"/>
 			<select name="measure">
-			<option value="s">$secs</option>
-			<option value="m">$mins</option>
-			<option value="h" selected="selected">$hours</option>
-			<option value="d">$days</option>
+				<option value="s">$secs</option>
+				<option value="m">$mins</option>
+				<option value="h" selected="selected">$hours</option>
+				<option value="d">$days</option>
 			</select>
 SELECT;
 	}
@@ -364,9 +364,9 @@ SELECT;
 ?>
 	<style type="text/css">
 		a.shareadraft-extend, a.shareadraft-extend-cancel { display: none; }
-		form.shareadraft-extend {white-space: nowrap;}
-		form.shareadraft-extend, form.shareadraft-extend input, form.shareadraft-extend select { font-size: 11px;}
-		th.actions, td.actions {text-align: center;}			
+		form.shareadraft-extend { white-space: nowrap; }
+		form.shareadraft-extend, form.shareadraft-extend input, form.shareadraft-extend select { font-size: 11px; }
+		th.actions, td.actions { text-align: center; }
 	</style>
 <?php
 	}
@@ -402,4 +402,3 @@ endif;
 if (class_exists('ShareADraft')) {
 	$__share_a_draft = new ShareADraft();
 }
-?>
