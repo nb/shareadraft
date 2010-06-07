@@ -28,3 +28,11 @@ e.g.
 
 1. The screen at Manage -> Share a Draft lets you choose a draft and monitor/delete your previous shares.
 
+== Changelog ==
+
+= 1.4 =
+* Italian translation thanks to gidibao's Cafe (http://gidibao.net/)
+
+= 1.3 =
+* Fix draft links for installs where WordPress URL is different from website URL
+
