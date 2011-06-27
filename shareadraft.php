@@ -245,12 +245,13 @@ class ShareADraft	{
 		$s = $this->get_shared();
 		foreach($s as $share):
 			$p = get_post($share['id']);
+			$url = get_bloginfo('url') . '/?p=' . $p->ID . '&shareadraft='. $share['key'];
 ?>
 			<tr>
 				<td><?php echo $p->ID; ?></td>
 				<td><?php echo $p->post_title; ?></td>
 				<!-- TODO: make the draft link selecatble -->
-				<td><?php echo get_bloginfo('url'); ?>/?p=<?php echo $p->ID?>&amp;shareadraft=<?php echo $share['key']; ?></td>
+				<td><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $url ); ?></a></td>
 				<td><?php echo $this->friendly_delta($share['expires'] - time()); ?></td>
 				<td class="actions">
 					<a class="shareadraft-extend edit" id="shareadraft-extend-link-<?php echo $share['key']; ?>"
