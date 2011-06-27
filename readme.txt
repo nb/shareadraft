@@ -2,7 +2,7 @@
 Contributors: nbachiyski
 Tags: post, post, draft, posts, drafts, share, sharing
 Requires at least: 2.3
-Tested up to: 3.0
+Tested up to: 3.2
 Stable tag: 1.3
 
 Let your friends preview one of your drafts, without giving them permissions to edit posts in your blog
@@ -31,7 +31,12 @@ e.g.
 == Changelog ==
 
 = 1.4 =
+* Included your own scheduled posts to the list
+* The link is now a real link
+* Dropped PHP4 support
+* Internal improvements
 * Italian translation thanks to gidibao's Cafe (http://gidibao.net/)
+* French translation thanks to Nicolas Brisebois-Tetreault
 
 = 1.3 =
 * Fix draft links for installs where WordPress URL is different from website URL
