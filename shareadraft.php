@@ -4,7 +4,7 @@ Plugin Name: Share a Draft
 Plugin URI: http://wordpress.org/extend/plugins/shareadraft/
 Description: Let your friends preview one of your drafts, without giving them permissions to edit posts in your blog.
 Author: Nikolay Bachiyski
-Version: 1.3
+Version: 1.4-alpha
 Author URI: http://nikolay.bg/
 Text Domain: shareadraft
 Generated At: www.wp-fun.co.uk;
@@ -145,6 +145,7 @@ class ShareADraft	{
 	function get_drafts() {
 		global $current_user;
 		$my_drafts = get_users_drafts($current_user->id);
+		$my_scheduled = $this->get_users_future($current_user->id);
 		$pending = get_others_pending($current_user->id);
 		$others_drafts = get_others_drafts($current_user->id);
 		$drafts_struct = array(
@@ -152,6 +153,11 @@ class ShareADraft	{
 				__('Your Drafts:', 'shareadraft'),
 				count($my_drafts),
 				&$my_drafts,
+			),
+			array(
+				__('Your Scheduled Posts:', 'shareadraft'),
+				count($my_scheduled),
+				&$my_scheduled,
 			),
 			array(
 				__('Pending Review:', 'shareadraft'),
@@ -165,6 +171,12 @@ class ShareADraft	{
 			),
 		);
 		return $drafts_struct; 
+	}
+	
+	function get_users_future($user_id) {
+		global $wpdb;
+		$query = $wpdb->prepare("SELECT ID, post_title FROM $wpdb->posts WHERE post_type = 'post' AND post_status = 'future' AND post_author = %d ORDER BY post_modified DESC", $user_id);
+		return $wpdb->get_results( $query );
 	}
 
 	function get_shared() {
