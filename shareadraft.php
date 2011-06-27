@@ -14,15 +14,15 @@ if (!class_exists('ShareADraft')):
 class ShareADraft	{
 	var $admin_options_name = "ShareADraft_options";
 
-	function ShareADraft(){
-		add_action('init', array(&$this, 'init'));
+	function __construct(){
+		add_action('init', array($this, 'init'));
 	}
 
 	function init() {
 		global $current_user;
-		add_action('admin_menu', array(&$this, 'add_admin_pages'));
-		add_filter('the_posts', array(&$this, 'the_posts_intercept'));
-		add_filter('posts_results', array(&$this, 'posts_results_intercept'));
+		add_action('admin_menu', array($this, 'add_admin_pages'));
+		add_filter('the_posts', array($this, 'the_posts_intercept'));
+		add_filter('posts_results', array($this, 'posts_results_intercept'));
 
 		$this->admin_options = $this->get_admin_options();
 		$this->admin_options = $this->clear_expired($this->admin_options);
@@ -37,8 +37,8 @@ class ShareADraft	{
 
 	function admin_page_init() {
 		wp_enqueue_script('jquery');
-		add_action('admin_head', array(&$this, 'print_admin_css'));
-		add_action('admin_head', array(&$this, 'print_admin_js'));
+		add_action('admin_head', array($this, 'print_admin_css'));
+		add_action('admin_head', array($this, 'print_admin_js'));
 	}
 
 	function get_admin_options() {
@@ -75,7 +75,7 @@ class ShareADraft	{
 
 	function add_admin_pages(){
 		add_submenu_page("edit.php", __('Share a Draft', 'shareadraft'), __('Share a Draft', 'shareadraft'),
-			'edit_posts', __FILE__, array(&$this, 'output_existing_menu_sub_admin_page'));
+			'edit_posts', __FILE__, array($this, 'output_existing_menu_sub_admin_page'));
 	}
 
 	function calculate_seconds($params) {
@@ -152,22 +152,22 @@ class ShareADraft	{
 			array(
 				__('Your Drafts:', 'shareadraft'),
 				count($my_drafts),
-				&$my_drafts,
+				$my_drafts,
 			),
 			array(
 				__('Your Scheduled Posts:', 'shareadraft'),
 				count($my_scheduled),
-				&$my_scheduled,
+				$my_scheduled,
 			),
 			array(
 				__('Pending Review:', 'shareadraft'),
 				count($pending),
-				&$pending,
+				$pending,
 			),
 			array(
 				__('Others&#8217; Drafts:', 'shareadraft'),
 				count($others_drafts),
-				&$others_drafts,
+				$others_drafts,
 			),
 		);
 		return $drafts_struct; 
@@ -339,17 +339,17 @@ class ShareADraft	{
 
 	function posts_results_intercept($posts) {
 		if (1 != count($posts)) return $posts;
-		$post = &$posts[0];
+		$post = $posts[0];
 		$status = get_post_status($post);
 		if ('publish' != $status && $this->can_view($post->ID)) {
-			$this->shared_post = & $post;
+			$this->shared_post = $post;
 		}
 		return $posts;
 	}
 
 	function the_posts_intercept($posts){
 		if (empty($posts) && !is_null($this->shared_post)) {
-			return array(&$this->shared_post);
+			return array($this->shared_post);
 		} else {
 			$this->shared_post = null;
 			return $posts;
