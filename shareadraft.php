@@ -387,23 +387,25 @@ SELECT;
 ?>
 	<script type="text/javascript">
 	//<![CDATA[
-	jQuery(function($) {
-		$('form.shareadraft-extend').hide();
-		$('a.shareadraft-extend').show();
-		$('a.shareadraft-extend-cancel').show();
-		$('a.shareadraft-extend-cancel').css('display', 'inline');
-	});
-	var shareadraft = {
-		toggle_extend: function(key) {
-			jQuery('#shareadraft-extend-form-'+key).show();
-			jQuery('#shareadraft-extend-link-'+key).hide();
-			jQuery('#shareadraft-extend-form-'+key+' input[name="expires"]').focus();
-		},
-		cancel_extend: function(key) {
-			jQuery('#shareadraft-extend-form-'+key).hide();
-			jQuery('#shareadraft-extend-link-'+key).show();
-		}
-	};
+	(function($) {
+		$(function() {
+			$('form.shareadraft-extend').hide();
+			$('a.shareadraft-extend').show();
+			$('a.shareadraft-extend-cancel').show();
+			$('a.shareadraft-extend-cancel').css('display', 'inline');
+		});
+		window.shareadraft = {
+			toggle_extend: function(key) {
+				$('#shareadraft-extend-form-'+key).show();
+				$('#shareadraft-extend-link-'+key).hide();
+				$('#shareadraft-extend-form-'+key+' input[name="expires"]').focus();
+			},
+			cancel_extend: function(key) {
+				$('#shareadraft-extend-form-'+key).hide();
+				$('#shareadraft-extend-link-'+key).show();
+			}
+		};
+	})(jQuery);
 	//]]>
 	</script>
 <?php
