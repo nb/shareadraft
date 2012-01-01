@@ -3,7 +3,7 @@ Contributors: nbachiyski
 Tags: post, post, draft, posts, drafts, share, sharing
 Requires at least: 3.2
 Tested up to: 3.3
-Stable tag: 1.3
+Stable tag: 1.4
 
 Let your friends preview one of your drafts, without giving them permissions to edit posts in your blog
 
