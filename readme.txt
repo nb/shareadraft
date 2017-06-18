@@ -1,5 +1,5 @@
 === Share a Draft ===
-Contributors: nbachiyski
+Contributors: nbachiyski, automattic
 Tags: post, post, draft, posts, drafts, share, sharing
 Requires at least: 3.2
 Tested up to: 3.3
