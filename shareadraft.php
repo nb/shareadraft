@@ -86,7 +86,7 @@ class Share_a_Draft {
 		if ( isset( $params['expires'] ) && ( $e = intval( $params['expires'] ) ) ) {
 			$exp = $e;
 		}
-		$mults = array( 's' => 1, 'm' => 60, 'h' => 3600, 'd' => 24*3600 );
+		$mults = array( 's' => 1, 'm' => MINUTE_IN_SECONDS, 'h' => HOUR_IN_SECONDS, 'd' => DAY_IN_SECONDS, 'w' => WEEK_IN_SECONDS );
 		if ( isset( $params['measure'] ) && isset( $mults[$params['measure']] ) ) {
 			$multiply = $mults[$params['measure']];
 		}
@@ -365,13 +365,15 @@ class Share_a_Draft {
 		$mins = __( 'minutes', 'shareadraft' );
 		$hours = __( 'hours', 'shareadraft' );
 		$days = __( 'days', 'shareadraft' );
+		$weeks = __( 'weeks', 'shareadraft' );
 		return <<<SELECT
 			<input name="expires" type="text" value="2" size="4"/>
 			<select name="measure">
 				<option value="s">$secs</option>
 				<option value="m">$mins</option>
-				<option value="h" selected="selected">$hours</option>
+				<option value="h">$hours</option>
 				<option value="d">$days</option>
+				<option value="w" selected>$weeks</option>
 			</select>
 SELECT;
 	}
