@@ -7,7 +7,7 @@ Author: Nikolay Bachiyski
 Version: 1.4
 Author URI: http://nikolay.bg/
 Text Domain: shareadraft
-*/ 
+*/
 
 if (!class_exists('ShareADraft')):
 class ShareADraft	{
@@ -104,7 +104,7 @@ class ShareADraft	{
 				'expires' => time() + $this->calculate_seconds($params),
 				'key' => uniqid('baba'.$p->ID.'_'));
 			$this->save_admin_options();
-		}	
+		}
 	}
 
 	function process_delete($params) {
@@ -169,9 +169,9 @@ class ShareADraft	{
 				$others_drafts,
 			),
 		);
-		return $drafts_struct; 
+		return $drafts_struct;
 	}
-	
+
 	function get_users_future($user_id) {
 		global $wpdb;
 		$query = $wpdb->prepare("SELECT ID, post_title FROM $wpdb->posts WHERE post_type = 'post' AND post_status = 'future' AND post_author = %d ORDER BY post_modified DESC", $user_id);
