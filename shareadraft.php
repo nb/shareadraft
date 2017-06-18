@@ -318,7 +318,7 @@ class Share_a_Draft {
 			<input type="submit" class="button" name="shareadraft_submit"
 				value="<?php echo attribute_escape( __( 'Share it', 'shareadraft' ) ); ?>" />
 			<?php _e( 'for', 'shareadraft' ); ?>
-			<?php echo $this->tmpl_measure_select(); ?>.
+			<?php echo $this->tmpl_measure_select(); ?>
 		</p>
 		</form>
 		</div>
