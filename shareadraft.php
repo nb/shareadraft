@@ -4,8 +4,8 @@ Plugin Name: Share a Draft
 Plugin URI: http://wordpress.org/extend/plugins/shareadraft/
 Description: Share private preview links to your drafts
 Author: Nikolay Bachiyski
-Author URI: http://nikolay.bg/
 Version: 1.5
+Author URI: https://extrapolate.me/
 Text Domain: shareadraft
 */
 
