@@ -7,7 +7,6 @@ Author: Nikolay Bachiyski
 Version: 1.4
 Author URI: http://nikolay.bg/
 Text Domain: shareadraft
-Generated At: www.wp-fun.co.uk;
 */ 
 
 if (!class_exists('ShareADraft')):
