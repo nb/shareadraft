@@ -190,12 +190,12 @@ class Share_a_Draft {
 	}
 
 	function friendly_delta( $s ) {
-		$m = (int)( $s / 60 );
+		$m = (int)( $s / MINUTE_IN_SECONDS );
 		$free_s = $s - $m * 60;
-		$h = (int)( $s / 3600 );
-		$free_m = (int)( ( $s - $h * 3600 ) / 60 );
-		$d = (int)( $s / ( 24 * 3600 ) );
-		$free_h = (int)( ( $s - $d * ( 24 * 3600 ) ) / 3600 );
+		$h = (int)( $s / HOUR_IN_SECONDS );
+		$free_m = (int)( ( $s - $h * HOUR_IN_SECONDS ) / MINUTE_IN_SECONDS );
+		$d = (int)( $s / ( DAY_IN_SECONDS ) );
+		$free_h = (int)( ( $s - $d * ( DAY_IN_SECONDS ) ) / HOUR_IN_SECONDS );
 		if ( $m < 1 ) {
 			$res = array( $s );
 		} elseif ( $h < 1 ) {
