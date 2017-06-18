@@ -26,7 +26,7 @@ class ShareADraft	{
 
 		$this->admin_options = $this->get_admin_options();
 		$this->admin_options = $this->clear_expired($this->admin_options);
-		$this->user_options = ($current_user->id > 0 && isset($this->admin_options[$current_user->id]))? $this->admin_options[$current_user->id] : array();
+		$this->user_options = ($current_user->ID > 0 && isset($this->admin_options[$current_user->ID]))? $this->admin_options[$current_user->ID] : array();
 
 		$this->save_admin_options();
 		load_plugin_textdomain('shareadraft', PLUGINDIR . '/shareadraft/languages');
@@ -48,8 +48,8 @@ class ShareADraft	{
 
 	function save_admin_options(){
 		global $current_user;
-		if ($current_user->id > 0) {
-			$this->admin_options[$current_user->id] = $this->user_options;
+		if ($current_user->ID > 0) {
+			$this->admin_options[$current_user->ID] = $this->user_options;
 		}
 		update_option($this->admin_options_name, $this->admin_options);
 	}
@@ -144,10 +144,10 @@ class ShareADraft	{
 
 	function get_drafts() {
 		global $current_user;
-		$my_drafts = get_users_drafts($current_user->id);
-		$my_scheduled = $this->get_users_future($current_user->id);
-		$pending = get_others_pending($current_user->id);
-		$others_drafts = get_others_drafts($current_user->id);
+		$my_drafts = get_users_drafts($current_user->ID);
+		$my_scheduled = $this->get_users_future($current_user->ID);
+		$pending = get_others_pending($current_user->ID);
+		$others_drafts = get_others_drafts($current_user->ID);
 		$drafts_struct = array(
 			array(
 				__('Your Drafts:', 'shareadraft'),
