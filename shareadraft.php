@@ -11,7 +11,7 @@ Domain Path: /languages
 */
 
 if ( !class_exists( 'ShareADraft' ) ) :
-class ShareADraft {
+class Share_a_Draft {
 	var $admin_options_name = 'ShareADraft_options';
 
 	function __construct(){
@@ -415,6 +415,6 @@ SELECT;
 }
 endif;
 
-if ( class_exists( 'ShareADraft' ) ) {
-	$__share_a_draft = new ShareADraft();
+if ( class_exists( 'Share_a_Draft' ) ) {
+	$__share_a_draft = new Share_a_Draft();
 }
