@@ -30,6 +30,10 @@ e.g.
 
 == Changelog ==
 
+= 1.5 =
+* Test with newest WordPress versions
+* Update copy
+
 = 1.4 =
 * Included your own scheduled posts to the list
 * The link is now a real link
