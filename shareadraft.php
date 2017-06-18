@@ -7,6 +7,7 @@ Author: Nikolay Bachiyski
 Version: 1.5
 Author URI: https://extrapolate.me/
 Text Domain: shareadraft
+Domain Path: /languages
 */
 
 if (!class_exists('ShareADraft')):
