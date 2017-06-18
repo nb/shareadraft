@@ -29,7 +29,7 @@ class ShareADraft	{
 		$this->user_options = ($current_user->ID > 0 && isset($this->admin_options[$current_user->ID]))? $this->admin_options[$current_user->ID] : array();
 
 		$this->save_admin_options();
-		load_plugin_textdomain('shareadraft', PLUGINDIR . '/shareadraft/languages');
+		load_plugin_textdomain( 'shareadraft', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 		if (isset($_GET['page']) && $_GET['page'] == plugin_basename(__FILE__))
 			$this->admin_page_init();
