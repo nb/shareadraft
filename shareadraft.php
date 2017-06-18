@@ -246,13 +246,15 @@ class Share_a_Draft {
 		foreach( $s as $share ):
 			$p = get_post( $share['id'] );
 			$url = get_bloginfo( 'url' ) . '/?p=' . $p->ID . '&shareadraft='. $share['key'];
+			$friendly_delta = $this->friendly_delta( $share['expires'] - time() );
+			$iso_expires = date_i18n( 'c', $share['expires'] );
 ?>
 			<tr>
 				<td><?php echo $p->ID; ?></td>
 				<td><?php echo $p->post_title; ?></td>
 				<!-- TODO: make the draft link selecatble -->
 				<td><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $url ); ?></a></td>
-				<td><?php echo $this->friendly_delta( $share['expires'] - time() ); ?></td>
+				<td><time title="<?php echo $iso_expires; ?>" datetime="<?php echo $iso_expires; ?>"><?php echo $friendly_delta; ?></time></td>
 				<td class="actions">
 					<a class="shareadraft-extend edit" id="shareadraft-extend-link-<?php echo $share['key']; ?>"
 						href="javascript:shareadraft.toggle_extend( '<?php echo $share['key']; ?>' );">
