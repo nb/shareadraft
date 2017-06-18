@@ -11,7 +11,7 @@ Text Domain: shareadraft
 
 if (!class_exists('ShareADraft')):
 class ShareADraft	{
-	var $admin_options_name = "ShareADraft_options";
+	var $admin_options_name = 'ShareADraft_options';
 
 	function __construct(){
 		add_action('init', array($this, 'init'));
@@ -73,7 +73,7 @@ class ShareADraft	{
 	}
 
 	function add_admin_pages(){
-		add_submenu_page("edit.php", __('Share a Draft', 'shareadraft'), __('Share a Draft', 'shareadraft'),
+		add_submenu_page('edit.php', __('Share a Draft', 'shareadraft'), __('Share a Draft', 'shareadraft'),
 			'edit_posts', __FILE__, array($this, 'output_existing_menu_sub_admin_page'));
 	}
 
