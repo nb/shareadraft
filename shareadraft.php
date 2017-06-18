@@ -14,7 +14,7 @@ if ( !class_exists( 'ShareADraft' ) ) :
 class Share_a_Draft {
 	var $admin_options_name = 'ShareADraft_options';
 
-	function __construct(){
+	function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
 	}
 
@@ -217,7 +217,7 @@ class Share_a_Draft {
 		return implode( ', ', array_reverse( $names ) );
 	}
 
-	function output_existing_menu_sub_admin_page(){
+	function output_existing_menu_sub_admin_page() {
 		if ( isset( $_POST['shareadraft_submit'] ) ) {
 			$msg = $this->process_post_options( $_POST );
 		} elseif ( isset( $_POST['action'] ) && $_POST['action'] == 'extend' ) {
@@ -351,7 +351,7 @@ class Share_a_Draft {
 		return $posts;
 	}
 
-	function the_posts_intercept( $posts ){
+	function the_posts_intercept( $posts ) {
 		if ( empty( $posts ) && !is_null( $this->shared_post ) ) {
 			return array( $this->shared_post );
 		} else {
