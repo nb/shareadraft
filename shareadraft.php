@@ -26,8 +26,10 @@ class Share_a_Draft {
 
 		$this->admin_options = $this->get_admin_options();
 		$this->admin_options = $this->clear_expired( $this->admin_options );
-		$this->user_options = ( $current_user->ID > 0 && isset( $this->admin_options[$current_user->ID] ) ) ? $this->admin_options[$current_user->ID] : array();
-
+		$this->user_options = array();
+		if ( $current_user->ID > 0 && isset( $this->admin_options[ $current_user->ID ] ) ) {
+			$this->user_options = $this->admin_options[ $current_user->ID ];
+		}
 		$this->save_admin_options();
 		load_plugin_textdomain( 'shareadraft', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
