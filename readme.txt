@@ -2,7 +2,7 @@
 Contributors: nbachiyski, automattic
 Tags: post, post, draft, posts, drafts, share, sharing
 Requires at least: 3.2
-Tested up to: 3.3
+Tested up to: 4.8
 Stable tag: 1.4
 
 Share private preview links to your drafts
