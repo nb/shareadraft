@@ -191,29 +191,26 @@ class Share_a_Draft {
 
 	function friendly_delta( $s ) {
 		$m = (int)( $s / MINUTE_IN_SECONDS );
-		$free_s = $s - $m * 60;
 		$h = (int)( $s / HOUR_IN_SECONDS );
 		$free_m = (int)( ( $s - $h * HOUR_IN_SECONDS ) / MINUTE_IN_SECONDS );
-		$d = (int)( $s / ( DAY_IN_SECONDS ) );
-		$free_h = (int)( ( $s - $d * ( DAY_IN_SECONDS ) ) / HOUR_IN_SECONDS );
+		$d = (int)( $s / DAY_IN_SECONDS );
+		$free_h = (int)( ( $s - $d * DAY_IN_SECONDS ) / HOUR_IN_SECONDS );
 		if ( $m < 1 ) {
-			$res = array( $s );
+			$res = array();
 		} elseif ( $h < 1 ) {
-			$res = array( $free_s, $m );
+			$res = array( $m );
 		} elseif ( $d < 1 ) {
-			$res = array( $free_s, $free_m, $h );
+			$res = array( $free_m, $h );
 		} else {
-			$res = array( $free_s, $free_m, $free_h, $d );
+			$res = array( $free_m, $free_h, $d );
 		}
 		$names = array();
 		if ( isset( $res[0] ) )
-			$names[] = sprintf( __ngettext( '%d second', '%d seconds', $res[0], 'shareadraft' ), $res[0] );
+			$names[] = sprintf( __ngettext( '%d minute', '%d minutes', $res[0], 'shareadraft' ), $res[0] );
 		if ( isset( $res[1] ) )
-			$names[] = sprintf( __ngettext( '%d minute', '%d minutes', $res[1], 'shareadraft' ), $res[1] );
+			$names[] = sprintf( __ngettext( '%d hour', '%d hours', $res[1], 'shareadraft' ), $res[1] );
 		if ( isset( $res[2] ) )
-			$names[] = sprintf( __ngettext( '%d hour', '%d hours', $res[2], 'shareadraft' ), $res[2] );
-		if ( isset( $res[3] ) )
-			$names[] = sprintf( __ngettext( '%d day', '%d days', $res[3], 'shareadraft' ), $res[3] );
+			$names[] = sprintf( __ngettext( '%d day', '%d days', $res[2], 'shareadraft' ), $res[2] );
 		return implode( ', ', array_reverse( $names ) );
 	}
 
