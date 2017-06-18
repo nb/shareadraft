@@ -215,6 +215,7 @@ class Share_a_Draft {
 	}
 
 	function output_existing_menu_sub_admin_page() {
+		$msg = '';
 		if ( isset( $_POST['shareadraft_submit'] ) ) {
 			$msg = $this->process_post_options( $_POST );
 		} elseif ( isset( $_POST['action'] ) && $_POST['action'] == 'extend' ) {
