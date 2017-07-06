@@ -10,7 +10,7 @@ Text Domain: shareadraft
 Domain Path: /languages
 */
 
-if ( ! class_exists( 'ShareADraft' ) ) :
+if ( ! class_exists( 'Share_a_Draft' ) ) :
 	class Share_a_Draft {
 		var $admin_options_name = 'ShareADraft_options';
 		var $shared_post = null;
