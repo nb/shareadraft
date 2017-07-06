@@ -349,12 +349,12 @@ endif;
 		}
 
 		function posts_results_intercept( $posts ) {
-			if ( 1 != count( $posts ) ) {
+			if ( 1 !== count( $posts ) ) {
 				return $posts;
 			}
 			$post = $posts[0];
 			$status = get_post_status( $post );
-			if ( 'publish' != $status && $this->can_view( $post->ID ) ) {
+			if ( 'publish' !== $status && $this->can_view( $post->ID ) ) {
 				$this->shared_post = $post;
 			}
 			return $posts;
