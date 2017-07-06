@@ -26,7 +26,10 @@ e.g.
 
 == Screenshots ==
 
-1. The screen at Manage -> Share a Draft lets you choose a draft and monitor/delete your previous shares.
+1. From Posts → Share a Draft you can share a new draft.
+
+2. From Posts → Share a Draft you can managed your shared drafts.
+
 
 == Changelog ==
 
