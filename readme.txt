@@ -1,7 +1,7 @@
 === Share a Draft ===
 Contributors: nbachiyski, automattic
 Tags: post, post, draft, posts, drafts, share, sharing
-Requires at least: 3.2
+Requires at least: 4.0
 Tested up to: 4.8
 Stable tag: 1.4
 
