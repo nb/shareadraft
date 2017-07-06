@@ -220,10 +220,13 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 		function output_existing_menu_sub_admin_page() {
 			$msg = '';
 			if ( isset( $_POST['shareadraft_submit'] ) ) {
+				check_admin_referer( 'shareadraft-new-share' );
 				$msg = $this->process_new_share( $_POST );
 			} elseif ( isset( $_POST['action'] ) && $_POST['action'] === 'extend' ) {
+				check_admin_referer( 'shareadraft-extend' );
 				$msg = $this->process_extend( $_POST );
 			} elseif ( isset( $_GET['action'] ) && $_GET['action'] === 'delete' ) {
+				check_admin_referer( 'shareadraft-delete' );
 				$msg = $this->process_delete( $_GET );
 			}
 			$draft_groups = $this->get_drafts();
@@ -276,10 +279,15 @@ foreach ( $s as $share ) :
 			href="javascript:shareadraft.cancel_extend( '<?php echo $share['key']; ?>' );">
 			<?php _e( 'Cancel', 'shareadraft' ); ?>
 		</a>
+		<?php wp_nonce_field( 'shareadraft-extend' ); ?>
 	</form>
 </td>
 <td class="actions">
-	<a class="delete" href="edit.php?page=<?php echo plugin_basename( __FILE__ ); ?>&amp;action=delete&amp;key=<?php echo $share['key']; ?>"><?php _e( 'Delete', 'shareadraft' ); ?></a>
+<?php
+	$delete_url = 'edit.php?page=' . plugin_basename( __FILE__ ) . '&action=delete&key=' . $share['key'];
+	$nonced_delete_url = wp_nonce_url( $delete_url, 'shareadraft-delete' );
+?>
+	<a class="delete" href="<?php echo esc_url( $nonced_delete_url ); ?>"><?php _e( 'Delete', 'shareadraft' ); ?></a>
 </td>
 </tr>
 <?php
@@ -325,6 +333,7 @@ endif;
 			<?php _e( 'for', 'shareadraft' ); ?>
 			<?php echo $this->tmpl_measure_select(); ?>
 		</p>
+		<?php wp_nonce_field( 'shareadraft-new-share' ); ?>
 		</form>
 		</div>
 <?php
