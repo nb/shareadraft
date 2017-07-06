@@ -33,7 +33,7 @@ if ( ! class_exists( 'ShareADraft' ) ) :
 			$this->save_admin_options();
 			load_plugin_textdomain( 'shareadraft', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
-			if ( isset( $_GET['page'] ) && $_GET['page'] == plugin_basename( __FILE__ ) ) {
+			if ( isset( $_GET['page'] ) && $_GET['page'] === plugin_basename( __FILE__ ) ) {
 				$this->admin_page_init();
 			}
 		}
@@ -107,7 +107,7 @@ if ( ! class_exists( 'ShareADraft' ) ) :
 				if ( ! $p ) {
 					return __( 'There is no such post!', 'shareadraft' );
 				}
-				if ( 'publish' == get_post_status( $p ) ) {
+				if ( 'publish' === get_post_status( $p ) ) {
 					return __( 'The post is published!', 'shareadraft' );
 				}
 				$this->user_options['shared'][] = array(
@@ -127,7 +127,7 @@ if ( ! class_exists( 'ShareADraft' ) ) :
 			}
 			$shared = array();
 			foreach ( $this->user_options['shared'] as $share ) {
-				if ( $share['key'] == $params['key'] ) {
+				if ( $share['key'] === $params['key'] ) {
 					continue;
 				}
 				$shared[] = $share;
@@ -144,7 +144,7 @@ if ( ! class_exists( 'ShareADraft' ) ) :
 			}
 			$shared = array();
 			foreach ( $this->user_options['shared'] as $share ) {
-				if ( $share['key'] == $params['key'] ) {
+				if ( $share['key'] === $params['key'] ) {
 					$share['expires'] += $this->calculate_seconds( $params );
 				}
 				$shared[] = $share;
@@ -229,9 +229,9 @@ if ( ! class_exists( 'ShareADraft' ) ) :
 			$msg = '';
 			if ( isset( $_POST['shareadraft_submit'] ) ) {
 				$msg = $this->process_post_options( $_POST );
-			} elseif ( isset( $_POST['action'] ) && $_POST['action'] == 'extend' ) {
+			} elseif ( isset( $_POST['action'] ) && $_POST['action'] === 'extend' ) {
 				$msg = $this->process_extend( $_POST );
-			} elseif ( isset( $_GET['action'] ) && $_GET['action'] == 'delete' ) {
+			} elseif ( isset( $_GET['action'] ) && $_GET['action'] === 'delete' ) {
 				$msg = $this->process_delete( $_GET );
 			}
 			$drafts_struct = $this->get_drafts();
@@ -348,7 +348,7 @@ endif;
 				}
 				$shares = $option['shared'];
 				foreach ( $shares as $share ) {
-					if ( $share['id'] == $post_id && $share['key'] == $_GET['shareadraft'] ) {
+					if ( $share['id'] === $post_id && $share['key'] === $_GET['shareadraft'] ) {
 						return true;
 					}
 				}
