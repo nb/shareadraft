@@ -36,6 +36,8 @@ e.g.
 = 1.5 =
 * Test with newest WordPress versions
 * Update copy
+* Removed seconds as a granularity level
+* Light cleanup of the almost 10-year old code
 
 = 1.4 =
 * Included your own scheduled posts to the list
