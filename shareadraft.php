@@ -100,7 +100,7 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 			return $exp * $multiply;
 		}
 
-		function process_post_options( $params ) {
+		function process_new_share( $params ) {
 			global $current_user;
 			if ( isset( $params['post_id'] ) ) {
 				$p = get_post( $params['post_id'] );
@@ -220,7 +220,7 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 		function output_existing_menu_sub_admin_page() {
 			$msg = '';
 			if ( isset( $_POST['shareadraft_submit'] ) ) {
-				$msg = $this->process_post_options( $_POST );
+				$msg = $this->process_new_share( $_POST );
 			} elseif ( isset( $_POST['action'] ) && $_POST['action'] === 'extend' ) {
 				$msg = $this->process_extend( $_POST );
 			} elseif ( isset( $_GET['action'] ) && $_GET['action'] === 'delete' ) {
