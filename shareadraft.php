@@ -214,13 +214,13 @@ if ( ! class_exists( 'ShareADraft' ) ) :
 			}
 			$names = array();
 			if ( isset( $res[0] ) ) {
-				$names[] = sprintf( __ngettext( '%d minute', '%d minutes', $res[0], 'shareadraft' ), $res[0] );
+				$names[] = sprintf( _n( '%d minute', '%d minutes', $res[0], 'shareadraft' ), $res[0] );
 			}
 			if ( isset( $res[1] ) ) {
-				$names[] = sprintf( __ngettext( '%d hour', '%d hours', $res[1], 'shareadraft' ), $res[1] );
+				$names[] = sprintf( _n( '%d hour', '%d hours', $res[1], 'shareadraft' ), $res[1] );
 			}
 			if ( isset( $res[2] ) ) {
-				$names[] = sprintf( __ngettext( '%d day', '%d days', $res[2], 'shareadraft' ), $res[2] );
+				$names[] = sprintf( _n( '%d day', '%d days', $res[2], 'shareadraft' ), $res[2] );
 			}
 			return implode( ', ', array_reverse( $names ) );
 		}
@@ -277,7 +277,7 @@ foreach ( $s as $share ) :
 		<input type="hidden" name="action" value="extend" />
 		<input type="hidden" name="key" value="<?php echo $share['key']; ?>" />
 		<input type="submit" class="button" name="shareadraft_extend_submit"
-			value="<?php echo attribute_escape( __( 'Extend', 'shareadraft' ) ); ?>"/>
+			value="<?php echo esc_attr__( 'Extend', 'shareadraft' ); ?>"/>
 <?php _e( 'by', 'shareadraft' );?>
 <?php echo $this->tmpl_measure_select(); ?>
 		<a class="shareadraft-extend-cancel"
@@ -319,7 +319,7 @@ foreach ( $draft_type[2] as $draft ) :
 		continue;
 	}
 ?>
-<option value="<?php echo $draft->ID?>"><?php echo wp_specialchars( $draft->post_title ); ?></option>
+<option value="<?php echo $draft->ID?>"><?php echo esc_html( $draft->post_title ); ?></option>
 <?php
 		endforeach;
 endif;
@@ -329,7 +329,7 @@ endif;
 		</p>
 		<p>
 			<input type="submit" class="button" name="shareadraft_submit"
-				value="<?php echo attribute_escape( __( 'Share it', 'shareadraft' ) ); ?>" />
+				value="<?php echo esc_attr__( 'Share it', 'shareadraft' ); ?>" />
 			<?php _e( 'for', 'shareadraft' ); ?>
 			<?php echo $this->tmpl_measure_select(); ?>
 		</p>
