@@ -171,14 +171,12 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 			) );
 			$drafts_struct = array(
 			array(
-				__( 'My unpublished posts:', 'shareadraft' ),
-				count( $my_unpublished ),
-				$my_unpublished,
+				'label' => __( 'My unpublished posts:', 'shareadraft' ),
+				'posts' => $my_unpublished,
 			),
 			array(
-				__( 'Others’ unpubilshed posts:', 'shareadraft' ),
-				count( $others_unpublished ),
-				$others_unpublished,
+				'label' => __( 'Others’ unpubilshed posts:', 'shareadraft' ),
+				'posts' => $others_unpublished,
 			),
 			);
 			return $drafts_struct;
