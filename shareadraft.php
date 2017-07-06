@@ -110,6 +110,9 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 				if ( 'publish' === get_post_status( $p ) ) {
 					return __( 'The post is published!', 'shareadraft' );
 				}
+				if ( ! current_user_can( 'edit_post', $p->ID ) ) {
+					return __( 'Sorry, you are not allowed to share posts you can’t edit.', 'shareadraft' );
+				}
 				$this->user_options['shared'][] = array(
 					'id' => $p->ID,
 					'expires' => time() + $this->calculate_seconds( $params ),
@@ -128,6 +131,9 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 			$shared = array();
 			foreach ( $this->user_options['shared'] as $share ) {
 				if ( $share['key'] === $params['key'] ) {
+					if ( ! current_user_can( 'edit_post', $share['id'] ) ) {
+						return __( 'Sorry, you are not allowed to share posts you can’t edit.', 'shareadraft' );
+					}
 					continue;
 				}
 				$shared[] = $share;
@@ -145,6 +151,9 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 			$shared = array();
 			foreach ( $this->user_options['shared'] as $share ) {
 				if ( $share['key'] === $params['key'] ) {
+					if ( ! current_user_can( 'edit_post', $share['id'] ) ) {
+						return __( 'Sorry, you are not allowed to share posts you can’t edit.', 'shareadraft' );
+					}
 					$share['expires'] += $this->calculate_seconds( $params );
 				}
 				$shared[] = $share;
