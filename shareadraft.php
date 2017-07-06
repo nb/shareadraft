@@ -169,7 +169,7 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 				'suppress_filters' => false,
 				'perm' => 'editable',
 			) );
-			$drafts_struct = array(
+			$draft_groups = array(
 			array(
 				'label' => __( 'My unpublished posts:', 'shareadraft' ),
 				'posts' => $my_unpublished,
@@ -179,7 +179,7 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 				'posts' => $others_unpublished,
 			),
 			);
-			return $drafts_struct;
+			return $draft_groups;
 		}
 
 		function get_shared() {
@@ -226,7 +226,7 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 			} elseif ( isset( $_GET['action'] ) && $_GET['action'] === 'delete' ) {
 				$msg = $this->process_delete( $_GET );
 			}
-			$drafts_struct = $this->get_drafts();
+			$draft_groups = $this->get_drafts();
 	?>
 	<div class="wrap">
 		<h2><?php _e( 'Share a Draft', 'shareadraft' ); ?></h2>
@@ -300,13 +300,13 @@ if ( empty( $s ) ) :
 			<select id="shareadraft-postid" name="post_id">
 			<option value=""><?php _e( 'Choose a draft', 'shareadraft' ); ?></option>
 <?php
-foreach ( $drafts_struct as $draft_type ) :
-	if ( $draft_type[1] ) :
+foreach ( $draft_groups as $draft_group ) :
+	if ( $draft_group['posts'] ) :
 ?>
 	<option value="" disabled="disabled"></option>
-	<option value="" disabled="disabled"><?php echo $draft_type[0]; ?></option>
+	<option value="" disabled="disabled"><?php echo $draft_group['label']; ?></option>
 <?php
-foreach ( $draft_type[2] as $draft ) :
+foreach ( $draft_group['posts'] as $draft ) :
 	if ( empty( $draft->post_title ) ) {
 		continue;
 	}
