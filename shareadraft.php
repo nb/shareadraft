@@ -156,39 +156,33 @@ if ( ! class_exists( 'ShareADraft' ) ) :
 
 		function get_drafts() {
 			global $current_user;
-			$my_drafts = get_users_drafts( $current_user->ID );
-			$my_scheduled = $this->get_users_future( $current_user->ID );
-			$pending = get_others_pending( $current_user->ID );
-			$others_drafts = get_others_drafts( $current_user->ID );
+			$unpublished_statuses = array( 'pending', 'draft', 'future', 'private' );
+			$my_unpublished = get_posts( array(
+				'post_status' => $unpublished_statuses,
+				'author' => $current_user->ID,
+				// some environments, like WordPress.com hook on those filters
+				// for an extra caching layer
+				'suppress_filters' => false,
+			) );
+			$others_unpublished = get_posts( array(
+				'post_status' => $unpublished_statuses,
+				'author' => -$current_user->ID,
+				'suppress_filters' => false,
+				'perm' => 'editable',
+			) );
 			$drafts_struct = array(
 			array(
-				__( 'Your Drafts:', 'shareadraft' ),
-				count( $my_drafts ),
-				$my_drafts,
+				__( 'My unpublished posts:', 'shareadraft' ),
+				count( $my_unpublished ),
+				$my_unpublished,
 			),
 			array(
-				__( 'Your Scheduled Posts:', 'shareadraft' ),
-				count( $my_scheduled ),
-				$my_scheduled,
-			),
-			array(
-				__( 'Pending Review:', 'shareadraft' ),
-				count( $pending ),
-				$pending,
-			),
-			array(
-				__( 'Others&#8217; Drafts:', 'shareadraft' ),
-				count( $others_drafts ),
-				$others_drafts,
+				__( 'Others’ unpubilshed posts:', 'shareadraft' ),
+				count( $others_unpublished ),
+				$others_unpublished,
 			),
 			);
 			return $drafts_struct;
-		}
-
-		function get_users_future( $user_id ) {
-			global $wpdb;
-			$query = $wpdb->prepare( "SELECT ID, post_title FROM $wpdb->posts WHERE post_type = 'post' AND post_status = 'future' AND post_author = %d ORDER BY post_modified DESC", $user_id );
-			return $wpdb->get_results( $query );
 		}
 
 		function get_shared() {
