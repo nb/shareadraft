@@ -89,7 +89,6 @@ if ( ! class_exists( 'ShareADraft' ) ) :
 				$exp = $e;
 			}
 			$mults = array(
-				's' => 1,
 				'm' => MINUTE_IN_SECONDS,
 				'h' => HOUR_IN_SECONDS,
 				'd' => DAY_IN_SECONDS,
@@ -373,7 +372,6 @@ endif;
 		}
 
 		function tmpl_measure_select() {
-			$secs = __( 'seconds', 'shareadraft' );
 			$mins = __( 'minutes', 'shareadraft' );
 			$hours = __( 'hours', 'shareadraft' );
 			$days = __( 'days', 'shareadraft' );
@@ -381,7 +379,6 @@ endif;
 			return <<<SELECT
 			<input name="expires" type="text" value="2" size="4"/>
 			<select name="measure">
-				<option value="s">$secs</option>
 				<option value="m">$mins</option>
 				<option value="h">$hours</option>
 				<option value="d">$days</option>
