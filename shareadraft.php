@@ -13,6 +13,7 @@ Domain Path: /languages
 if ( ! class_exists( 'ShareADraft' ) ) :
 	class Share_a_Draft {
 		var $admin_options_name = 'ShareADraft_options';
+		var $shared_post = null;
 
 		function __construct() {
 			add_action( 'init', array( $this, 'init' ) );
