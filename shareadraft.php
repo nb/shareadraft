@@ -242,9 +242,9 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 	?>
 	<div class="wrap">
 		<h2><?php _e( 'Share a Draft', 'shareadraft' ); ?></h2>
-<?php 	if ( $msg ) :?>
+		<?php 	if ( $msg ) :?>
 		<div id="message" class="updated fade"><?php echo $msg; ?></div>
-<?php 	endif;?>
+		<?php 	endif;?>
 		<h3><?php _e( 'Currently shared drafts', 'shareadraft' ); ?></h3>
 		<table class="widefat">
 			<thead>
@@ -257,83 +257,83 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 			</tr>
 			</thead>
 			<tbody>
-<?php
-		$s = $this->get_shared();
-foreach ( $s as $share ) :
-	$p = get_post( $share['id'] );
-	$url = get_bloginfo( 'url' ) . '/?p=' . $p->ID . '&shareadraft=' . $share['key'];
-	$friendly_delta = $this->friendly_delta( $share['expires'] - time() );
-	$iso_expires = date_i18n( 'c', $share['expires'] );
-?>
-<tr>
-<td><?php echo $p->ID; ?></td>
-<td><?php echo $p->post_title; ?></td>
-<!-- TODO: make the draft link selecatble -->
-<td><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $url ); ?></a></td>
-<td><time title="<?php echo $iso_expires; ?>" datetime="<?php echo $iso_expires; ?>"><?php echo $friendly_delta; ?></time></td>
-<td class="actions">
-	<a class="shareadraft-extend edit" id="shareadraft-extend-link-<?php echo $share['key']; ?>"
-		href="javascript:shareadraft.toggle_extend( '<?php echo $share['key']; ?>' );">
-			<?php _e( 'Extend', 'shareadraft' ); ?>
-	</a>
-	<form class="shareadraft-extend" id="shareadraft-extend-form-<?php echo $share['key']; ?>"
-		action="" method="post">
-		<input type="hidden" name="action" value="extend" />
-		<input type="hidden" name="key" value="<?php echo $share['key']; ?>" />
-		<input type="submit" class="button" name="shareadraft_extend_submit"
-			value="<?php echo esc_attr__( 'Extend', 'shareadraft' ); ?>"/>
-<?php _e( 'by', 'shareadraft' );?>
-<?php echo $this->tmpl_measure_select(); ?>
-		<a class="shareadraft-extend-cancel"
-			href="javascript:shareadraft.cancel_extend( '<?php echo $share['key']; ?>' );">
-			<?php _e( 'Cancel', 'shareadraft' ); ?>
-		</a>
-		<?php wp_nonce_field( 'shareadraft-extend' ); ?>
-	</form>
-</td>
-<td class="actions">
-<?php
-	$delete_url = 'edit.php?page=' . plugin_basename( __FILE__ ) . '&action=delete&key=' . $share['key'];
-	$nonced_delete_url = wp_nonce_url( $delete_url, 'shareadraft-delete' );
-?>
-	<a class="delete" href="<?php echo esc_url( $nonced_delete_url ); ?>"><?php _e( 'Delete', 'shareadraft' ); ?></a>
-</td>
-</tr>
-<?php
-		endforeach;
-if ( empty( $s ) ) :
-?>
-<tr>
-<td colspan="5"><?php _e( 'No shared drafts!', 'shareadraft' ); ?></td>
-</tr>
-<?php
-		endif;
-?>
+			<?php
+					$s = $this->get_shared();
+			foreach ( $s as $share ) :
+				$p = get_post( $share['id'] );
+				$url = get_bloginfo( 'url' ) . '/?p=' . $p->ID . '&shareadraft=' . $share['key'];
+				$friendly_delta = $this->friendly_delta( $share['expires'] - time() );
+				$iso_expires = date_i18n( 'c', $share['expires'] );
+			?>
+			<tr>
+			<td><?php echo $p->ID; ?></td>
+			<td><?php echo $p->post_title; ?></td>
+			<!-- TODO: make the draft link selecatble -->
+			<td><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $url ); ?></a></td>
+			<td><time title="<?php echo $iso_expires; ?>" datetime="<?php echo $iso_expires; ?>"><?php echo $friendly_delta; ?></time></td>
+			<td class="actions">
+				<a class="shareadraft-extend edit" id="shareadraft-extend-link-<?php echo $share['key']; ?>"
+					href="javascript:shareadraft.toggle_extend( '<?php echo $share['key']; ?>' );">
+						<?php _e( 'Extend', 'shareadraft' ); ?>
+				</a>
+				<form class="shareadraft-extend" id="shareadraft-extend-form-<?php echo $share['key']; ?>"
+					action="" method="post">
+					<input type="hidden" name="action" value="extend" />
+					<input type="hidden" name="key" value="<?php echo $share['key']; ?>" />
+					<input type="submit" class="button" name="shareadraft_extend_submit"
+						value="<?php echo esc_attr__( 'Extend', 'shareadraft' ); ?>"/>
+					<?php _e( 'by', 'shareadraft' );?>
+					<?php echo $this->tmpl_measure_select(); ?>
+					<a class="shareadraft-extend-cancel"
+						href="javascript:shareadraft.cancel_extend( '<?php echo $share['key']; ?>' );">
+						<?php _e( 'Cancel', 'shareadraft' ); ?>
+					</a>
+					<?php wp_nonce_field( 'shareadraft-extend' ); ?>
+				</form>
+			</td>
+			<td class="actions">
+			<?php
+				$delete_url = 'edit.php?page=' . plugin_basename( __FILE__ ) . '&action=delete&key=' . $share['key'];
+				$nonced_delete_url = wp_nonce_url( $delete_url, 'shareadraft-delete' );
+			?>
+				<a class="delete" href="<?php echo esc_url( $nonced_delete_url ); ?>"><?php _e( 'Delete', 'shareadraft' ); ?></a>
+			</td>
+			</tr>
+			<?php
+					endforeach;
+			if ( empty( $s ) ) :
+			?>
+			<tr>
+			<td colspan="5"><?php _e( 'No shared drafts!', 'shareadraft' ); ?></td>
+			</tr>
+			<?php
+					endif;
+			?>
 			</tbody>
 		</table>
 		<h3><?php _e( 'Share a Draft', 'shareadraft' ); ?></h3>
 		<form id="shareadraft-share" action="" method="post">
 		<p>
 			<select id="shareadraft-postid" name="post_id">
-			<option value=""><?php _e( 'Choose a draft', 'shareadraft' ); ?></option>
-<?php
-foreach ( $draft_groups as $draft_group ) :
-	if ( $draft_group['posts'] ) :
-?>
-	<option value="" disabled="disabled"></option>
-	<option value="" disabled="disabled"><?php echo $draft_group['label']; ?></option>
-<?php
-foreach ( $draft_group['posts'] as $draft ) :
-	if ( empty( $draft->post_title ) ) {
-		continue;
-	}
-?>
-<option value="<?php echo $draft->ID?>"><?php echo esc_html( $draft->post_title ); ?></option>
-<?php
-		endforeach;
-endif;
-		endforeach;
-?>
+				<option value=""><?php _e( 'Choose a draft', 'shareadraft' ); ?></option>
+				<?php
+				foreach ( $draft_groups as $draft_group ) :
+					if ( $draft_group['posts'] ) :
+				?>
+					<option value="" disabled="disabled"></option>
+					<option value="" disabled="disabled"><?php echo $draft_group['label']; ?></option>
+				<?php
+				foreach ( $draft_group['posts'] as $draft ) :
+					if ( empty( $draft->post_title ) ) {
+						continue;
+					}
+				?>
+				<option value="<?php echo $draft->ID?>"><?php echo esc_html( $draft->post_title ); ?></option>
+				<?php
+						endforeach;
+				endif;
+						endforeach;
+				?>
 			</select>
 		</p>
 		<p>
@@ -345,7 +345,7 @@ endif;
 		<?php wp_nonce_field( 'shareadraft-new-share' ); ?>
 		</form>
 		</div>
-<?php
+		<?php
 		}
 
 		function can_view( $post_id ) {
@@ -400,7 +400,7 @@ endif;
 				<option value="d">$days</option>
 				<option value="w" selected>$weeks</option>
 			</select>
-SELECT;
+			SELECT;
 		}
 
 		function print_admin_css() {
