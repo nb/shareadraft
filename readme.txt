@@ -2,7 +2,7 @@
 Contributors: nbachiyski, automattic
 Tags: post, post, draft, posts, drafts, share, sharing
 Requires at least: 4.0
-Tested up to: 4.8
+Tested up to: 5.8
 Stable tag: trunk
 
 Share private preview links to your drafts
