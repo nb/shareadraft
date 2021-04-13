@@ -78,7 +78,7 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 		}
 
 		function add_admin_pages() {
-			add_submenu_page( 'edit.php', __( 'Share a Draft', 'shareadraft' ), __( 'Share a Draft', 'shareadraft' ),
+			add_submenu_page( 'edit.php', _x( 'Share a Draft', 'Tab Title', 'shareadraft' ), _x( 'Share a Draft', 'Menu Item Title', 'shareadraft' ),
 			'edit_posts', __FILE__, array( $this, 'output_existing_menu_sub_admin_page' ) );
 		}
 
@@ -241,7 +241,7 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 			$draft_groups = $this->get_drafts();
 	?>
 	<div class="wrap">
-		<h2><?php _e( 'Share a Draft', 'shareadraft' ); ?></h2>
+		<h2><?php _ex( 'Share a Draft', 'Page Title', 'shareadraft' ); ?></h2>
 <?php 	if ( $msg ) :?>
 		<div id="message" class="updated fade"><?php echo $msg; ?></div>
 <?php 	endif;?>
@@ -311,7 +311,7 @@ if ( empty( $s ) ) :
 ?>
 			</tbody>
 		</table>
-		<h3><?php _e( 'Share a Draft', 'shareadraft' ); ?></h3>
+		<h3><?php _ex( 'Share a Draft', 'Feature Title', 'shareadraft' ); ?></h3>
 		<form id="shareadraft-share" action="" method="post">
 		<p>
 			<select id="shareadraft-postid" name="post_id">
