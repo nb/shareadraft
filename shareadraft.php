@@ -78,7 +78,7 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 		}
 
 		function add_admin_pages() {
-			add_submenu_page( 'edit.php', __( 'Share a Draft', 'shareadraft' ), __( 'Share a Draft', 'shareadraft' ),
+			add_submenu_page( 'tools.php', __( 'Share a Draft', 'shareadraft' ), __( 'Share a Draft', 'shareadraft' ),
 			'edit_posts', __FILE__, array( $this, 'output_existing_menu_sub_admin_page' ) );
 		}
 
@@ -166,6 +166,7 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 			global $current_user;
 			$unpublished_statuses = array( 'pending', 'draft', 'future', 'private' );
 			$my_unpublished = get_posts( array(
+                'post_type' => 'any',
 				'post_status' => $unpublished_statuses,
 				'author' => $current_user->ID,
 				// some environments, like WordPress.com hook on those filters
@@ -173,6 +174,7 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 				'suppress_filters' => false,
 			) );
 			$others_unpublished = get_posts( array(
+                'post_type' => 'any',
 				'post_status' => $unpublished_statuses,
 				'author' => -$current_user->ID,
 				'suppress_filters' => false,
