@@ -166,7 +166,7 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 			global $current_user;
 			$unpublished_statuses = array( 'pending', 'draft', 'future', 'private' );
 			$my_unpublished = get_posts( array(
-                'post_type' => 'any',
+				'post_type' => 'any',
 				'post_status' => $unpublished_statuses,
 				'author' => $current_user->ID,
 				// some environments, like WordPress.com hook on those filters
@@ -174,7 +174,7 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 				'suppress_filters' => false,
 			) );
 			$others_unpublished = get_posts( array(
-                'post_type' => 'any',
+				'post_type' => 'any',
 				'post_status' => $unpublished_statuses,
 				'author' => -$current_user->ID,
 				'suppress_filters' => false,
