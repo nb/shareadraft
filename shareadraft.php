@@ -22,8 +22,8 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 		function init() {
 			global $current_user;
 			add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
-			add_filter( 'the_posts', array( $this, 'the_posts_intercept' ) );
-			add_filter( 'posts_results', array( $this, 'posts_results_intercept' ) );
+			add_filter( 'the_posts', array( $this, 'the_posts_intercept' ), 10, 2 );
+			add_filter( 'posts_results', array( $this, 'posts_results_intercept' ), 10, 2 );
 
 			$this->admin_options = $this->get_admin_options();
 			$this->admin_options = $this->clear_expired( $this->admin_options );
@@ -366,7 +366,12 @@ endif;
 			return false;
 		}
 
-		function posts_results_intercept( $posts ) {
+		function posts_results_intercept( $posts, $query  ) {
+			// don't filter template parts
+			if( $this->is_template_query( $query ) ) {
+				return $posts;
+			}
+
 			if ( 1 !== count( $posts ) ) {
 				return $posts;
 			}
@@ -378,13 +383,21 @@ endif;
 			return $posts;
 		}
 
-		function the_posts_intercept( $posts ) {
+		function the_posts_intercept( $posts, $query ) {
+			if( $this->is_template_query( $query ) ) {
+				return $posts;
+			}
+
 			if ( empty( $posts ) && ! is_null( $this->shared_post ) ) {
 				return array( $this->shared_post );
 			} else {
 				$this->shared_post = null;
 				return $posts;
 			}
+		}
+
+		public function is_template_query( $query ) {
+			return in_array( $query->query_vars['post_type'], array( 'wp_template', 'wp_template_part' ) );
 		}
 
 		function tmpl_measure_select() {
