@@ -2,7 +2,7 @@
 Contributors: nbachiyski, automattic
 Tags: post, post, draft, posts, drafts, share, sharing
 Requires at least: 4.0
-Tested up to: 5.8
+Tested up to: 6.8
 Stable tag: trunk
 
 Share private preview links to your drafts
@@ -32,6 +32,9 @@ e.g.
 
 
 == Changelog ==
+
+= 1.6 =
+* Fix PHP deprecation warnings
 
 = 1.5 =
 * Test with newest WordPress versions
