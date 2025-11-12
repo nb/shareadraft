@@ -4,7 +4,7 @@ Plugin Name: Share a Draft
 Plugin URI: http://wordpress.org/plugins/shareadraft/
 Description: Share private preview links to your drafts
 Author: Nikolay Bachiyski, Automattic
-Version: 1.5
+Version: 1.6
 Author URI: https://extrapolate.me/
 Text Domain: shareadraft
 Domain Path: /languages
@@ -14,6 +14,8 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 	class Share_a_Draft {
 		var $admin_options_name = 'ShareADraft_options';
 		var $shared_post = null;
+		var $admin_options = array();
+		var $user_options = array();
 
 		function __construct() {
 			add_action( 'init', array( $this, 'init' ) );
