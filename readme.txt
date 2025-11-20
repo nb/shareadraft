@@ -12,7 +12,7 @@ Share private preview links to your drafts
 Drafts in WordPress are visible for the author and blog administrators. In many cases, however, you want
 to share a draft with your friends or colleagues for either review or approval.
 
-Share a Draft allows you to create a unique link to a draft for a limited time and send it to whoever you want.
+Share a Draft allows you to create a unique temporary link to a draft and send it to whoever you want.
 
 == Installation ==
 
@@ -34,6 +34,8 @@ e.g.
 == Changelog ==
 
 = 1.6 =
+* Support all publicly queryable post types
+* Fix FSE compatibility
 * Fix PHP deprecation warnings
 
 = 1.5 =

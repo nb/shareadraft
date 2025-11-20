@@ -24,8 +24,8 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 		function init() {
 			global $current_user;
 			add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
-			add_filter( 'the_posts', array( $this, 'the_posts_intercept' ) );
-			add_filter( 'posts_results', array( $this, 'posts_results_intercept' ) );
+			add_filter( 'the_posts', array( $this, 'the_posts_intercept' ), 10, 2 );
+			add_filter( 'posts_results', array( $this, 'posts_results_intercept' ), 10, 2 );
 
 			$this->admin_options = $this->get_admin_options();
 			$this->admin_options = $this->clear_expired( $this->admin_options );
@@ -50,6 +50,26 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 		function get_admin_options() {
 			$saved_options = get_option( $this->admin_options_name );
 			return is_array( $saved_options )? $saved_options : array();
+		}
+
+		function get_supported_post_types() {
+			// Get publicly queryable post types
+			$post_types = get_post_types( array(
+				'publicly_queryable' => true,
+			), 'names' );
+
+			// Pages are public and have front-end URLs, but aren't "publicly_queryable"
+			// in the WP_Query sense, so we need to explicitly include them
+			if ( ! in_array( 'page', $post_types, true ) ) {
+				$post_types[] = 'page';
+			}
+
+			/**
+			 * Filters the post types that support draft sharing.
+			 *
+			 * @param array $post_types Array of post type names that support draft sharing.
+			 */
+			return apply_filters( 'shareadraft_supported_post_types', $post_types );
 		}
 
 		function save_admin_options() {
@@ -80,7 +100,12 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 		}
 
 		function add_admin_pages() {
+			// Add under Posts (for backwards compatibility)
 			add_submenu_page( 'edit.php', __( 'Share a Draft', 'shareadraft' ), __( 'Share a Draft', 'shareadraft' ),
+			'edit_posts', __FILE__, array( $this, 'output_existing_menu_sub_admin_page' ) );
+
+			// Add under Tools (for improved discoverability)
+			add_submenu_page( 'tools.php', __( 'Share a Draft', 'shareadraft' ), __( 'Share a Draft', 'shareadraft' ),
 			'edit_posts', __FILE__, array( $this, 'output_existing_menu_sub_admin_page' ) );
 		}
 
@@ -108,6 +133,10 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 				$p = get_post( $params['post_id'] );
 				if ( ! $p ) {
 					return __( 'There is no such post!', 'shareadraft' );
+				}
+				$supported_post_types = $this->get_supported_post_types();
+				if ( ! in_array( $p->post_type, $supported_post_types, true ) ) {
+					return __( 'This post type cannot be shared.', 'shareadraft' );
 				}
 				if ( 'publish' === get_post_status( $p ) ) {
 					return __( 'The post is published!', 'shareadraft' );
@@ -167,8 +196,10 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 		function get_drafts() {
 			global $current_user;
 			$unpublished_statuses = array( 'pending', 'draft', 'future', 'private' );
+			$supported_post_types = $this->get_supported_post_types();
 			$my_unpublished = get_posts( array(
 				'post_status' => $unpublished_statuses,
+				'post_type' => $supported_post_types,
 				'author' => $current_user->ID,
 				// some environments, like WordPress.com hook on those filters
 				// for an extra caching layer
@@ -176,6 +207,7 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 			) );
 			$others_unpublished = get_posts( array(
 				'post_status' => $unpublished_statuses,
+				'post_type' => $supported_post_types,
 				'author' => -$current_user->ID,
 				'suppress_filters' => false,
 				'perm' => 'editable',
@@ -263,7 +295,18 @@ if ( ! class_exists( 'Share_a_Draft' ) ) :
 		$s = $this->get_shared();
 foreach ( $s as $share ) :
 	$p = get_post( $share['id'] );
-	$url = get_bloginfo( 'url' ) . '/?p=' . $p->ID . '&shareadraft=' . $share['key'];
+
+	// Build URL based on post type
+	$base_url = get_bloginfo( 'url' );
+	if ( 'page' === $p->post_type ) {
+		$url = $base_url . '/?page_id=' . $p->ID . '&shareadraft=' . $share['key'];
+	} elseif ( 'post' === $p->post_type ) {
+		$url = $base_url . '/?p=' . $p->ID . '&shareadraft=' . $share['key'];
+	} else {
+		// Custom post types
+		$url = $base_url . '/?post_type=' . $p->post_type . '&p=' . $p->ID . '&shareadraft=' . $share['key'];
+	}
+
 	$friendly_delta = $this->friendly_delta( $share['expires'] - time() );
 	$iso_expires = date_i18n( 'c', $share['expires'] );
 ?>
@@ -368,11 +411,18 @@ endif;
 			return false;
 		}
 
-		function posts_results_intercept( $posts ) {
+		function posts_results_intercept( $posts, $query ) {
 			if ( 1 !== count( $posts ) ) {
 				return $posts;
 			}
 			$post = $posts[0];
+
+			// Only intercept supported post types
+			$supported_post_types = $this->get_supported_post_types();
+			if ( ! in_array( $post->post_type, $supported_post_types, true ) ) {
+				return $posts;
+			}
+
 			$status = get_post_status( $post );
 			if ( 'publish' !== $status && $this->can_view( $post->ID ) ) {
 				$this->shared_post = $post;
@@ -380,13 +430,28 @@ endif;
 			return $posts;
 		}
 
-		function the_posts_intercept( $posts ) {
+		function the_posts_intercept( $posts, $query ) {
 			if ( empty( $posts ) && ! is_null( $this->shared_post ) ) {
+				// Only inject shared post if query is for a supported post type
+				// This prevents injecting blog posts into template-part or other queries
+				$query_post_type = $query->query_vars['post_type'] ?? '';
+
+				// Only validate if a specific post type is set (not 'any' or empty)
+				if ( $query_post_type && 'any' !== $query_post_type ) {
+					$supported_post_types = $this->get_supported_post_types();
+					$query_types = (array) $query_post_type; // Handle both string and array
+
+					// If none of the query types are supported, don't inject
+					if ( ! array_intersect( $query_types, $supported_post_types ) ) {
+						return $posts;
+					}
+				}
+
 				return array( $this->shared_post );
-			} else {
-				$this->shared_post = null;
-				return $posts;
 			}
+
+			$this->shared_post = null;
+			return $posts;
 		}
 
 		function tmpl_measure_select() {
