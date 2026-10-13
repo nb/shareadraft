@@ -690,6 +690,7 @@ final class PreviewLinksAdminPage {
 		$reading .= '<li>' . esc_html__( 'Revoked: switched off by hand.', 'shareadraft' ) . '</li>';
 		$reading .= '</ul><p>' . esc_html__( 'Uses counts how many people have opened the link, against its maximum; an infinity sign means no maximum.', 'shareadraft' ) . '</p>';
 		$reading .= '<p>' . esc_html__( 'Each browser counts as one person. A reviewer who opens the link in another browser, on another device, or in a private window, or who clears their cookies, counts again, while people sharing one browser count once. A browser is remembered for a week, so on a link that lasts longer, a reviewer returning after a week counts again.', 'shareadraft' ) . '</p>';
+		$reading .= '<p>' . esc_html__( 'People who can edit a post never count: they get WordPress\'s own preview of the draft, whatever the state of the link they open, so a link that is exhausted, expired, or revoked still shows them the draft.', 'shareadraft' ) . '</p>';
 
 		// The optional restriction columns only exist while their feature is
 		// enabled, so their explanations come and go with them.
