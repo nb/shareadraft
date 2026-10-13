@@ -205,7 +205,9 @@ artefact and publishes nothing, and again from the tag, which attaches it to
 the GitHub Release as `shareadraft-<version>-vip.zip`. VIP's handoff rules
 require the package to carry what `composer test` and `vip-integration
 validate` need, so unlike the WordPress.org ZIP it holds every tracked file,
-plus the built `build/` assets. The workflow fails unless the plugin header,
+plus the built `build/` assets. The one tracked file left out is `.gitignore`:
+VIP commits the package into its own repo, where it would drop `build/` from
+that commit. The workflow fails unless the plugin header,
 the version constant and `release.plugin_version` in `vip-manifest.yaml`
 agree (and match the tag, on a tag), and unless `vip-integration validate`
 passes when run inside the unpacked package.
