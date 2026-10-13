@@ -5,7 +5,8 @@ name: VIP Integration Package
 #
 # This is not the WordPress.org ZIP from release.yml. That one strips tests,
 # docs and Composer files, which the VIP handoff rules require, so it fails
-# validation. This package is every tracked file plus the built editor assets.
+# validation. This package is every tracked file bar .gitignore, plus the built
+# editor assets.
 #
 # It runs in two modes:
 #
@@ -97,6 +98,10 @@ jobs:
           mkdir -p dist/shareadraft
           git ls-files -z | rsync -a --from0 --files-from=- ./ dist/shareadraft/
           rsync -a build/ dist/shareadraft/build/
+
+          # VIP commits the package into its own git repo, where our
+          # .gitignore would silently drop build/ from that commit.
+          find dist/shareadraft -name .gitignore -type f -delete
 
           echo "ZIP_PATH=shareadraft-${VERSION}-vip.zip" >> "$GITHUB_ENV"
 
