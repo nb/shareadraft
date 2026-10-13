@@ -237,13 +237,13 @@ function GenerateModal( { postId, onCreated, onClose } ) {
 					help={
 						null === settings.maxUsesLimit
 							? __(
-									'How many people can open this link. Opening it in another browser or device counts as a new person. Leave empty for unlimited.',
+									'How many people can open this link. Opening it in another browser or device counts as a new person, but people who can edit this post, such as you, always see the draft and do not use up a view. Leave empty for unlimited.',
 									'shareadraft'
 								)
 							: sprintf(
 									/* translators: %1$d: the most viewers a link may allow, e.g. 1000. */
 									__(
-										'How many people can open this link, up to %1$d. Opening it in another browser or device counts as a new person. Leave empty for %1$d.',
+										'How many people can open this link, up to %1$d. Opening it in another browser or device counts as a new person, but people who can edit this post, such as you, always see the draft and do not use up a view. Leave empty for %1$d.',
 										'shareadraft'
 									),
 									settings.maxUsesLimit

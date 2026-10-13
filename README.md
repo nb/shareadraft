@@ -62,6 +62,10 @@ No. Anyone with the link can open the draft, unless you have bound the link to n
 
 The draft, rendered by your theme exactly as it will look when published. If the link has expired, been revoked, or been used up, they see a short notice saying so instead.
 
+### Why can I still see a draft through a link that has expired or been used up?
+
+Because you can edit the post. Anyone who can edit it, such as its author, editors, and administrators, sees the draft through WordPress's own preview, so a link's expiry, viewing limit, and other restrictions don't apply to them, and their visits don't use up any of its views. Reviewers who cannot edit the post are held to every limit.
+
 ### Can I change a link after sharing it?
 
 No. A link's lifetime and limits are fixed when it is created. To change them, revoke the link and generate a new one.
