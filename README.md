@@ -110,7 +110,32 @@ On [GitHub](https://github.com/Automattic/shareadraft). See the [contributing gu
 
 ## Changelog
 
-All of the detailed changes are listed in [CHANGELOG.md](https://github.com/Automattic/shareadraft/blob/main/CHANGELOG.md).
+The highlights of recent releases are below. Every change, including older releases, is listed in [CHANGELOG.md](https://github.com/Automattic/shareadraft/blob/main/CHANGELOG.md).
+
+### 2.0.0
+
+A rewrite. Requires WordPress 6.9 and PHP 8.2 or later.
+
+- **New:** Generate preview links from the Share a Draft panel in the block editor or the classic editing screen, and choose how long each one lasts and how many people can open it.
+- **New:** Bind a link to named reviewers, who confirm their email address with a one-time code, or restrict it to trusted IP ranges.
+- **New:** A Preview Links screen listing every link on the site, with bulk revoking (for example, everything one person made) and an administrator switch to pause every link at once.
+- **New:** Reviewers who open an expired, revoked, or used-up link are told why it stopped working. Unknown links stay a plain "not found".
+- **New:** Manage links with WP-CLI (`wp shareadraft`) and the Abilities API, under the same rules and permissions as the editor.
+- **New:** Links are discarded when a draft is published, made private, or trashed, and revoked when the person who created them is deleted.
+- **New:** Support for the Export and Erase Personal Data tools, and a Site Health check for the cleanup schedule.
+- **Changed:** Links are created in the editor rather than under Posts → Share a Draft, which remains only for reviewing and deleting 1.x links, as Share a Draft (Old).
+- **Removed:** Extending a link's lifetime. Generate a new link instead.
+- **Security:** Only a hash of each link's token is stored, and every limit is enforced on the server.
+
+### 1.7
+
+- **New:** A button to copy a shared draft's link.
+- **Changed:** A redesigned Share a Draft screen.
+- **Fixed:** Previews breaking the header and other template parts on block themes.
+
+### 1.6
+
+- **Fixed:** PHP 8 deprecation notices, warnings from shares whose post was deleted, and a comparison that could make a valid link 404.
 
 ## Upgrade Notice
 
